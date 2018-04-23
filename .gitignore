@@ -1,1 +1,4 @@
 emails/node_modules
+/pluggable-compiler/Compiler.Core/bin
+/pluggable-compiler/Compiler.Core/obj
+/pluggable-compiler/.vs
