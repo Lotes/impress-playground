@@ -9,5 +9,6 @@
         T Visit_Choice(Choice choice);
         T Visit_Sequence(Sequence sequence);
         T Visit_Repetition(Repetition repetition);
+        T Visit_Named(Named named);
     }
 }

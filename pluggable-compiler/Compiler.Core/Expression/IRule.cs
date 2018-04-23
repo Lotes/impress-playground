@@ -2,7 +2,7 @@
 {
     public interface IRule
     {
-        string Name { get; }
+        string HintName { get; }
         IExpression Expression { get; }
     }
 }

@@ -4,7 +4,7 @@ namespace Compiler.Core.Expression
 {
     public interface IGrammar
     {
-        IRule Start { get; }
-        IReadOnlyDictionary<string, IRule> Rules { get; }
+        IRule StartingRule { get; }
+        IEnumerable<IRule> Rules { get; }
     }
 }

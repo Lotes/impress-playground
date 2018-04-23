@@ -6,24 +6,19 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
-    public class Call: IExpression
+    public class Named : IExpression
     {
-        public Call(IRule rule)
-        {
-            Rule = rule;
-        }
+        public string Identifier { get; }
+        public IExpression Expression { get; }
 
-        public IRule Rule { get; }
         public T Accept<T>(IVisitor<T> visitor)
         {
-            return visitor.Visit_Call(this);
+            return visitor.Visit_Named(this);
         }
 
         public bool Parse(IParserContext context, int position, out IParseResult result)
         {
-            if (!context.Grammar.Rules.Contains(Rule))
-                throw new InvalidOperationException("Invalid call!");
-            var ok = Rule.Expression.Parse(context, position, out result);
+            var ok = Expression.Parse(context, position, out result);
             result = ok ? new ParseResult(this, context, result.Start.Index, result.End.Index) : null;
             return ok;
         }
