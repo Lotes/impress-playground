@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Compiler.Core.Expression;
+using System;
 
 namespace Compiler.Core.Engine.Builder
 {
@@ -23,41 +24,41 @@ namespace Compiler.Core.Engine.Builder
             kit.BinaryOperators.Add(op);
         }
 
-        public IParserBuilder AddCoercion<TSource, TTarget>(CoercionType type, Func<TSource, TTarget> convert)
+        public void AddCoercion<TSource, TTarget>(CoercionType type, Func<TSource, TTarget> convert)
         {
-            throw new NotImplementedException();
+            
         }
 
-        public void AddCustomExpression(Func<IPartialGrammarBuilder, IPartialGrammar> generateGrammar, Func<string, IExpression> definition)
+        public void AddCustomExpression(Func<IPartialGrammarBuilder, IPartialGrammar> generateGrammar, Func<IParseResult, IExpression> definition)
         {
-            throw new NotImplementedException();
+            
         }
 
-        public void AddLiteralDefinition(Func<IPartialGrammarBuilder, IPartialGrammar> generateGrammar, Func<string, IExpression> toTarget, int priority = 0)
+        public void AddLiteralDefinition(Func<IPartialGrammarBuilder, IPartialGrammar> generateGrammar, Func<IParseResult, IExpression> toTarget, int priority = 0)
         {
             var grammar = generateGrammar(grammarBuilder);
             var literal = new Literal(grammar, toTarget, priority);
             kit.Literals.Add(literal);
         }
 
-        public void AddStatementDefintion(Func<IPartialGrammarBuilder, IPartialGrammar> generateGrammar, Func<string, IStatement> toStatement, int priority = 0)
+        public void AddStatementDefintion(Func<IPartialGrammarBuilder, IPartialGrammar> generateGrammar, Func<IParseResult, IStatement> toStatement, int priority = 0)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void AddUnaryOperation<TOperand>(IUnaryOperator op, Func<IExpression, IExpression> definition, int priority = 0)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void AddUnaryOperator(Func<IPartialGrammarBuilder, IPartialGrammar> generateGrammar, int priority = 0)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void AddWhiteSpace(Func<IPartialGrammarBuilder, IPartialGrammar> generateGrammar, int priority = 0)
         {
-            throw new NotImplementedException();
+            kit.WhiteSpaces.Add(new WhiteSpace(generateGrammar(grammarBuilder), priority));
         }
 
         public IParser Build()

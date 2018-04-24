@@ -8,12 +8,13 @@ namespace Compiler.Core.Expression
 {
     public class ParseResult : IParseResult
     {
-        public ParseResult(IExpression expression, IParserContext context, int startIndex, int endIndex)
+        public ParseResult(IExpression expression, IParserContext context, int startIndex, int endIndex, IEnumerable<IParseResult> children)
         {
             Expression = expression;
             Context = context;
             Start = new Cursor(startIndex);
             End = new Cursor(endIndex);
+            Children = new List<IParseResult>(children);
         }
 
         public IExpression Expression { get; }
@@ -23,5 +24,9 @@ namespace Compiler.Core.Expression
         public ICursor Start { get; }
 
         public ICursor End { get; }
+
+        public List<IParseResult> Children { get; }
+
+        IReadOnlyList<IParseResult> IParseResult.Children => Children;
     }
 }

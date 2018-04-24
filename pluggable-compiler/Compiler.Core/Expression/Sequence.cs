@@ -42,6 +42,7 @@ namespace Compiler.Core.Expression
         public bool Parse(IParserContext context, int position, out IParseResult result)
         {
             var pos = position;
+            var list = new LinkedList<IParseResult>();
             foreach(var element in Elements)
             {
                 IParseResult elemResult;
@@ -50,9 +51,10 @@ namespace Compiler.Core.Expression
                     result = null;
                     return false;
                 }
+                list.AddLast(elemResult);
                 pos += elemResult.GetLength();
             }
-            result = new ParseResult(this, context, position, Math.Max(position, pos - 1));
+            result = new ParseResult(this, context, position, Math.Max(position, pos - 1), list);
             return true;
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Compiler.Core.Expression
 {
@@ -24,6 +25,7 @@ namespace Compiler.Core.Expression
 
         public bool Parse(IParserContext context, int position, out IParseResult result)
         {
+            var children = new LinkedList<IParseResult>();
             var end = position;
             int start = position;
             IParseResult itResult;
@@ -34,6 +36,7 @@ namespace Compiler.Core.Expression
                     result = null;
                     return false;
                 }
+                children.AddLast(itResult);
                 end += itResult.GetLength();
             }
             if(Maximum != null)
@@ -42,13 +45,16 @@ namespace Compiler.Core.Expression
                 for (index = Minimum; index <= Maximum.Value; index++)
                 {
                     if (Expression.Parse(context, end, out itResult))
+                    {
                         end += itResult.GetLength();
+                        children.AddLast(itResult);
+                    }
                     else
                         break;
                 }
                 if (index <= Maximum.Value)
                 {
-                    result = new ParseResult(this, context, start, end);
+                    result = new ParseResult(this, context, start, end, children);
                     return true;
                 }
                 else
@@ -60,8 +66,11 @@ namespace Compiler.Core.Expression
             else
             {
                 while (Expression.Parse(context, end, out itResult))
+                {
                     end += itResult.GetLength();
-                result = new ParseResult(this, context, start, end);
+                    children.AddLast(itResult);
+                }
+                result = new ParseResult(this, context, start, end, children);
                 return true;
             }
         }

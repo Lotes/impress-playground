@@ -8,7 +8,7 @@ namespace Compiler.Core.Expression
 {
     public class Named : IExpression
     {
-        public string Identifier { get; }
+        public string Name { get; }
         public IExpression Expression { get; }
 
         public T Accept<T>(IVisitor<T> visitor)
@@ -19,7 +19,7 @@ namespace Compiler.Core.Expression
         public bool Parse(IParserContext context, int position, out IParseResult result)
         {
             var ok = Expression.Parse(context, position, out result);
-            result = ok ? new ParseResult(this, context, result.Start.Index, result.End.Index) : null;
+            result = ok ? new ParseResult(this, context, result.Start.Index, result.End.Index, new[] { result }) : null;
             return ok;
         }
     }

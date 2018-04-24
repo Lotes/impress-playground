@@ -17,12 +17,17 @@ namespace Compiler.Core.Expression
 
         public bool Parse(IParserContext context, int position, out IParseResult result)
         {
+            if(CharSet.Length == 0)
+            {
+                result = new ParseResult(this, context, position, position-1, new IParseResult[0]);
+                return true;
+            }
             try
             {
                 var character = context.Input[position];
                 if (CharSet.Includes(character))
                 {
-                    result = new ParseResult(this, context, position, position);
+                    result = new ParseResult(this, context, position, position, new IParseResult[0]);
                     return true;
                 }
                 result = null;

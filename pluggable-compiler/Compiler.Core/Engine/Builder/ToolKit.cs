@@ -17,7 +17,7 @@ namespace Compiler.Core.Engine.Builder
             BinaryOperations = new Dictionary<BinaryOperator, LinkedList<IBinaryOperation>>();
             CustomOperations = new SortedSet<CustomOperator>();
             Literals = new SortedSet<Literal>();
-            Skippables = new SortedSet<ISkippable>();
+            WhiteSpaces = new SortedSet<WhiteSpace>();
         }
 
         public Dictionary<Type, LinkedList<ICoercionOperation>> CoercionRules { get; }
@@ -27,6 +27,6 @@ namespace Compiler.Core.Engine.Builder
         public Dictionary<BinaryOperator, LinkedList<IBinaryOperation>> BinaryOperations { get; }
         public SortedSet<CustomOperator> CustomOperations { get; }
         public SortedSet<Literal> Literals { get; }
-        public SortedSet<ISkippable> Skippables { get; }
+        public SortedSet<WhiteSpace> WhiteSpaces { get; }
     }
 }

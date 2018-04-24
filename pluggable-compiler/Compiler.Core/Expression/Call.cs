@@ -24,7 +24,7 @@ namespace Compiler.Core.Expression
             if (!context.Grammar.Rules.Contains(Rule))
                 throw new InvalidOperationException("Invalid call!");
             var ok = Rule.Expression.Parse(context, position, out result);
-            result = ok ? new ParseResult(this, context, result.Start.Index, result.End.Index) : null;
+            result = ok ? new ParseResult(this, context, result.Start.Index, result.End.Index, new[] { result }) : null;
             return ok;
         }
     }
