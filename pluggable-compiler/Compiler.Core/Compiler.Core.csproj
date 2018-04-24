@@ -51,8 +51,9 @@
     <Compile Include="Engine\Builder\BinaryOperator.cs" />
     <Compile Include="Engine\Builder\ICoercionOperation.cs" />
     <Compile Include="Engine\Builder\CustomOperator.cs" />
-    <Compile Include="Engine\Builder\IPartialGrammar.cs" />
-    <Compile Include="Engine\Builder\IPartialGrammarBuilder.cs" />
+    <Compile Include="Expression\Expressions.cs" />
+    <Compile Include="Expression\IPartialGrammar.cs" />
+    <Compile Include="Expression\IGrammarBuilder.cs" />
     <Compile Include="Engine\Builder\ParserBuilder.cs" />
     <Compile Include="Engine\Builder\ToolKit.cs" />
     <Compile Include="Engine\CoercionExpression.cs" />
@@ -77,7 +78,9 @@
     <Compile Include="Expression\Choice.cs" />
     <Compile Include="Expression\IGrammar.cs" />
     <Compile Include="Expression\IParserContext.cs" />
+    <Compile Include="Expression\IPartialGrammarBuilder.cs" />
     <Compile Include="Expression\Named.cs" />
+    <Compile Include="Expression\ParserContext.cs" />
     <Compile Include="Expression\ParseResult.cs" />
     <Compile Include="Expression\Cursor.cs" />
     <Compile Include="Expression\ICursor.cs" />
@@ -87,7 +90,7 @@
     <Compile Include="Expression\IVisitor.cs" />
     <Compile Include="Expression\Not.cs" />
     <Compile Include="Expression\ParseResultExtensions.cs" />
-    <Compile Include="Expression\Peg.cs" />
+    <Compile Include="Expression\Grammars.cs" />
     <Compile Include="Expression\Repetition.cs" />
     <Compile Include="Expression\Sequence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

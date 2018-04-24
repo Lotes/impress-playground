@@ -1,4 +1,5 @@
 ﻿using System;
+using Compiler.Core.Expression;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Compiler.Tests
@@ -7,8 +8,15 @@ namespace Compiler.Tests
     public class ExpressionTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestSequence()
         {
+            IRule rule;
+            var grammar = Grammars.New()
+                .NewRule(Expressions.Sequence("hello"), out rule)
+                .Build();
+            grammar.Accepts("hello");
+            grammar.Rejects("hallo");
+            grammar.Rejects("");
         }
     }
 }

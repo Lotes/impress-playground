@@ -1,4 +1,6 @@
-﻿namespace Compiler.Core.Engine.Builder
+﻿using Compiler.Core.Expression;
+
+namespace Compiler.Core.Engine.Builder
 {
     public class WhiteSpace: ILexicalDefinition
     {

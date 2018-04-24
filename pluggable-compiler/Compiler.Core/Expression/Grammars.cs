@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
-    public static class Peg
+    public static class Grammars
     {
+        public static IGrammarBuilder New()
+        {
+            return null;
+        }
+
         public static IExpression Then(this IExpression lhs, params IExpression[] rhss)
         {
             return new Sequence(new[] { lhs }.Concat(rhss));
