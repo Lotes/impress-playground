@@ -7,14 +7,14 @@ namespace Compiler.Core.Engine.Builder
     {
         private Func<IParseResult, IExpression> convert;
 
-        public Literal(IPartialGrammar partialGrammar, Func<IParseResult, IExpression> convert, int priority)
+        public Literal(IGrammar partialGrammar, Func<IParseResult, IExpression> convert, int priority)
         {
             this.convert = convert;
             PartialGrammar = partialGrammar;
             Priority = priority;
         }
 
-        public IPartialGrammar PartialGrammar { get; }
+        public IGrammar PartialGrammar { get; }
         public int Priority { get; }
         public IExpression FromString(IParseResult input)
         {

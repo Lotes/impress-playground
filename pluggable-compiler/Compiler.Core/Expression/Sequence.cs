@@ -46,7 +46,7 @@ namespace Compiler.Core.Expression
             foreach(var element in Elements)
             {
                 IParseResult elemResult;
-                if (!element.Parse(context, position, out elemResult))
+                if (!element.Parse(context, pos, out elemResult))
                 {
                     result = null;
                     return false;

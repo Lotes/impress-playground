@@ -4,13 +4,13 @@ namespace Compiler.Core.Engine.Builder
 {
     public class CustomOperator : ILexicalDefinition
     {
-        public CustomOperator(IPartialGrammar partialGrammar, int priority)
+        public CustomOperator(IGrammar partialGrammar, int priority)
         {
             PartialGrammar = partialGrammar;
             Priority = priority;
         }
 
-        public IPartialGrammar PartialGrammar { get; }
+        public IGrammar PartialGrammar { get; }
         public int Priority { get; }
     }
 }

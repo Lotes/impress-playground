@@ -10,7 +10,7 @@ namespace Compiler.Core.Expression
     {
         public static IGrammarBuilder New()
         {
-            return null;
+            return new GrammarBuilder();
         }
 
         public static IExpression Then(this IExpression lhs, params IExpression[] rhss)

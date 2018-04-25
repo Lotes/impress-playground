@@ -9,6 +9,10 @@ namespace Compiler.Core.Expression
 {
     public static class Expressions
     {
+        public static readonly IExpression Epsilon = new CharacterClass(new CharSet());
+
+        public static readonly IExpression EOF = new EOF();
+
         public static IExpression Sequence(string str, bool ignoreCase = false)
         {
             return new Sequence(str, ignoreCase);
@@ -17,6 +21,16 @@ namespace Compiler.Core.Expression
         public static IExpression Sequence(params IExpression[] elements)
         {
             return new Sequence(elements);
+        }
+
+        public static IExpression Choice(params IExpression[] choices)
+        {
+            return new Choice(choices);
+        }
+
+        public static IExpression Call(IRule rule)
+        {
+            return new Call(rule);
         }
     }
 }

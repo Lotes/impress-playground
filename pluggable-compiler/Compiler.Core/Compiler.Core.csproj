@@ -51,8 +51,9 @@
     <Compile Include="Engine\Builder\BinaryOperator.cs" />
     <Compile Include="Engine\Builder\ICoercionOperation.cs" />
     <Compile Include="Engine\Builder\CustomOperator.cs" />
+    <Compile Include="Expression\EOF.cs" />
     <Compile Include="Expression\Expressions.cs" />
-    <Compile Include="Expression\IPartialGrammar.cs" />
+    <Compile Include="Expression\GrammarBuilder.cs" />
     <Compile Include="Expression\IGrammarBuilder.cs" />
     <Compile Include="Engine\Builder\ParserBuilder.cs" />
     <Compile Include="Engine\Builder\ToolKit.cs" />
@@ -78,7 +79,6 @@
     <Compile Include="Expression\Choice.cs" />
     <Compile Include="Expression\IGrammar.cs" />
     <Compile Include="Expression\IParserContext.cs" />
-    <Compile Include="Expression\IPartialGrammarBuilder.cs" />
     <Compile Include="Expression\Named.cs" />
     <Compile Include="Expression\ParserContext.cs" />
     <Compile Include="Expression\ParseResult.cs" />

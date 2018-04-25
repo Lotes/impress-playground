@@ -8,6 +8,7 @@
         T Visit_Not(Not not);
         T Visit_Choice(Choice choice);
         T Visit_Sequence(Sequence sequence);
+        T Visit_EOF(EOF eOF);
         T Visit_Repetition(Repetition repetition);
         T Visit_Named(Named named);
     }

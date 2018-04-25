@@ -8,7 +8,7 @@ namespace Compiler.Core.Engine.Builder
 {
     public interface ILexicalDefinition
     {
-        IPartialGrammar PartialGrammar { get; }
+        IGrammar PartialGrammar { get; }
         int Priority { get; }
     }
 }
