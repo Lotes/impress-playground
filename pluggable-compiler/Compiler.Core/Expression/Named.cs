@@ -11,16 +11,9 @@ namespace Compiler.Core.Expression
         public string Name { get; }
         public IExpression Expression { get; }
 
-        public T Accept<T>(IVisitor<T> visitor)
+        public T Accept<T, S>(IVisitor<T, S> visitor, S state)
         {
-            return visitor.Visit_Named(this);
-        }
-
-        public bool Parse(IParserContext context, int position, out IParseResult result)
-        {
-            var ok = Expression.Parse(context, position, out result);
-            result = ok ? new ParseResult(this, context, result.Start.Index, result.End.Index, new[] { result }) : null;
-            return ok;
+            return visitor.Visit_Named(state, this);
         }
     }
 }

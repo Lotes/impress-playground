@@ -34,28 +34,9 @@ namespace Compiler.Core.Expression
 
         public IEnumerable<IExpression> Elements { get; }
 
-        public T Accept<T>(IVisitor<T> visitor)
+        public T Accept<T, S>(IVisitor<T, S> visitor, S state)
         {
-            return visitor.Visit_Sequence(this);
-        }
-
-        public bool Parse(IParserContext context, int position, out IParseResult result)
-        {
-            var pos = position;
-            var list = new LinkedList<IParseResult>();
-            foreach(var element in Elements)
-            {
-                IParseResult elemResult;
-                if (!element.Parse(context, pos, out elemResult))
-                {
-                    result = null;
-                    return false;
-                }
-                list.AddLast(elemResult);
-                pos += elemResult.GetLength();
-            }
-            result = new ParseResult(this, context, position, Math.Max(position, pos - 1), list);
-            return true;
+            return visitor.Visit_Sequence(state, this);
         }
     }
 }

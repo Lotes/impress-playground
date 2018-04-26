@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
-    public class EOF : IExpression
+    public interface IExpressionParser
     {
-        public T Accept<T, S>(IVisitor<T, S> visitor, S state)
-        {
-            return visitor.Visit_EOF(state, this);
-        }
+        IParseResult Parse(IGrammar expression, string input);
     }
 }

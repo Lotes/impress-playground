@@ -11,20 +11,9 @@ namespace Compiler.Core.Expression
 
         public IEnumerable<IExpression> Choices { get; }
 
-        public T Accept<T>(IVisitor<T> visitor)
+        public T Accept<T, S>(IVisitor<T, S> visitor, S state)
         {
-            return visitor.Visit_Choice(this);
-        }
-
-        public bool Parse(IParserContext context, int position, out IParseResult result)
-        {
-            foreach(var choice in Choices)
-            {
-                if (choice.Parse(context, position, out result))
-                    return true;
-            }
-            result = null;
-            return false;
+            return visitor.Visit_Choice(state, this);
         }
     }
 }

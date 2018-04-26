@@ -12,18 +12,29 @@ namespace Compiler.Tests
     {
         public static void Accepts(this IGrammar @this, string str)
         {
-            var context = new ParserContext(str, @this);
-            IParseResult result;
-            var ok = @this.StartingRule.Expression.Parse(context, 0, out result);
+            var ok = @this.Parse(str, out IParseResult result);
             Assert.IsTrue(ok);
         }
 
         public static void Rejects(this IGrammar @this, string str)
         {
-            var context = new ParserContext(str, @this);
-            IParseResult result;
-            var ok = @this.StartingRule.Expression.Parse(context, 0, out result);
+            var ok = @this.Parse(str, out IParseResult result);
             Assert.IsFalse(ok);
+        }
+
+        private static bool Parse(this IGrammar @this, string str, out IParseResult result)
+        {
+            var parser = new ExpressionParser();
+            try
+            {
+                result = parser.Parse(@this, str);
+                return true;
+            }
+            catch
+            {
+                result = null;
+                return false;
+            }
         }
     }
 }

@@ -52,8 +52,10 @@
     <Compile Include="Engine\Builder\ICoercionOperation.cs" />
     <Compile Include="Engine\Builder\CustomOperator.cs" />
     <Compile Include="Expression\EOF.cs" />
+    <Compile Include="Expression\ExpressionParser.cs" />
     <Compile Include="Expression\Expressions.cs" />
     <Compile Include="Expression\GrammarBuilder.cs" />
+    <Compile Include="Expression\IExpressionParser.cs" />
     <Compile Include="Expression\IGrammarBuilder.cs" />
     <Compile Include="Engine\Builder\ParserBuilder.cs" />
     <Compile Include="Engine\Builder\ToolKit.cs" />

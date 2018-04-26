@@ -7,7 +7,6 @@ namespace Compiler.Core.Expression
 {
     public interface IExpression
     {
-        bool Parse(IParserContext context, int position, out IParseResult result);
-        T Accept<T>(IVisitor<T> visitor);
+        TResult Accept<TResult, TState>(IVisitor<TResult, TState> visitor, TState state);
     }
 }

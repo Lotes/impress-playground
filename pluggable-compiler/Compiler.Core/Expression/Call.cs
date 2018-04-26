@@ -14,18 +14,9 @@ namespace Compiler.Core.Expression
         }
 
         public IRule Rule { get; }
-        public T Accept<T>(IVisitor<T> visitor)
+        public T Accept<T, S>(IVisitor<T, S> visitor, S state)
         {
-            return visitor.Visit_Call(this);
-        }
-
-        public bool Parse(IParserContext context, int position, out IParseResult result)
-        {
-            if (!context.Grammar.Rules.Contains(Rule))
-                throw new InvalidOperationException("Invalid call!");
-            var ok = Rule.Expression.Parse(context, position, out result);
-            result = ok ? new ParseResult(this, context, result.Start.Index, result.End.Index, new[] { result }) : null;
-            return ok;
+            return visitor.Visit_Call(state, this);
         }
     }
 }
