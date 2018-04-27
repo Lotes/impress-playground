@@ -23,14 +23,14 @@ namespace Compiler.Core.Expression
 
     public class Rule : IRule
     {
-        public Rule(IExpression expression, string hintName = "<no name>")
+        public Rule(IGrammarExpression expression, string hintName = "<no name>")
         {
             HintName = hintName;
             Expression = expression;
         }
 
         public string HintName { get; }
-        public IExpression Expression { get; set; }
+        public IGrammarExpression Expression { get; set; }
         public override string ToString()
         {
             return HintName;
@@ -45,7 +45,7 @@ namespace Compiler.Core.Expression
             return new Grammar(rules, startAt);
         }
 
-        public IGrammarBuilder NewRule(IExpression peg, string hintName, out IRule rule)
+        public IGrammarBuilder NewRule(IGrammarExpression peg, string hintName, out IRule rule)
         {
             Rule result;
             rule = result = new Rule(peg, hintName);
@@ -53,7 +53,7 @@ namespace Compiler.Core.Expression
             return this;
         }
 
-        public IGrammarBuilder RedefineRule(IRule rule, IExpression peg)
+        public IGrammarBuilder RedefineRule(IRule rule, IGrammarExpression peg)
         {
             if (rules.Contains(rule))
                 ((Rule)rule).Expression = peg;

@@ -1,13 +1,13 @@
 ﻿namespace Compiler.Core.Expression
 {
-    public class Not : IExpression
+    public class Not : IGrammarExpression
     {
-        public Not(IExpression operand)
+        public Not(IGrammarExpression operand)
         {
             Operand = operand;
         }
 
-        public IExpression Operand { get; }
+        public IGrammarExpression Operand { get; }
 
         public T Accept<T, S>(IVisitor<T, S> visitor, S state)
         {

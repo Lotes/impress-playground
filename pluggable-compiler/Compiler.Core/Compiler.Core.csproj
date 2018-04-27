@@ -86,7 +86,7 @@
     <Compile Include="Expression\ParseResult.cs" />
     <Compile Include="Expression\Cursor.cs" />
     <Compile Include="Expression\ICursor.cs" />
-    <Compile Include="Expression\IExpression.cs" />
+    <Compile Include="Expression\IGrammarExpression.cs" />
     <Compile Include="Expression\IParseResult.cs" />
     <Compile Include="Expression\IRule.cs" />
     <Compile Include="Expression\IVisitor.cs" />
@@ -96,7 +96,6 @@
     <Compile Include="Expression\Repetition.cs" />
     <Compile Include="Expression\Sequence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UseCases.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

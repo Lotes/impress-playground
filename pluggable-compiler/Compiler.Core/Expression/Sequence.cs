@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace Compiler.Core.Expression
 {
-    public class Sequence: IExpression
+    public class Sequence: IGrammarExpression
     {
-        public Sequence(IEnumerable<IExpression> elements)
+        public Sequence(IEnumerable<IGrammarExpression> elements)
         {
             Elements = elements;
         }
@@ -32,7 +32,7 @@ namespace Compiler.Core.Expression
             }).ToArray();
         }
 
-        public IEnumerable<IExpression> Elements { get; }
+        public IEnumerable<IGrammarExpression> Elements { get; }
 
         public T Accept<T, S>(IVisitor<T, S> visitor, S state)
         {

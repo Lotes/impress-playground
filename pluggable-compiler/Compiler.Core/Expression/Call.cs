@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
-    public class Call: IExpression
+    public class Call: IGrammarExpression
     {
         public Call(IRule rule)
         {

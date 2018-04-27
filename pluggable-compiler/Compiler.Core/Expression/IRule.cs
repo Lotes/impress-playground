@@ -3,6 +3,6 @@
     public interface IRule
     {
         string HintName { get; }
-        IExpression Expression { get; }
+        IGrammarExpression Expression { get; }
     }
 }

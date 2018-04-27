@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Compiler.Core.Expression
 {
-    public class Repetition: IExpression
+    public class Repetition: IGrammarExpression
     {
-        public Repetition(IExpression expression, int minimum, int? maximum)
+        public Repetition(IGrammarExpression expression, int minimum, int? maximum)
         {
             if (maximum != null && minimum > maximum.Value)
                 throw new ArgumentException(nameof(maximum));
@@ -14,7 +14,7 @@ namespace Compiler.Core.Expression
             Maximum = maximum;
         }
 
-        public IExpression Expression { get; }
+        public IGrammarExpression Expression { get; }
         public int Minimum { get; }
         public int? Maximum { get; }
 

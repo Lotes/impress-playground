@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Compiler.Tests
 {
     [TestClass]
-    public class ExpressionTests
+    public class GrammarExpressionTests
     {
         [TestMethod]
         public void Sequence()

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
-    public class Named : IExpression
+    public class Named : IGrammarExpression
     {
         public string Name { get; }
-        public IExpression Expression { get; }
+        public IGrammarExpression Expression { get; }
 
         public T Accept<T, S>(IVisitor<T, S> visitor, S state)
         {

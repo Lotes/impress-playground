@@ -2,7 +2,7 @@
 
 namespace Compiler.Core.Expression
 {
-    public class CharacterClass: IExpression
+    public class CharacterClass: IGrammarExpression
     {
         public CharacterClass(ICharSet charSet)
         {

@@ -8,7 +8,7 @@ namespace Compiler.Core.Expression
 {
     public class ParseResult : IParseResult
     {
-        public ParseResult(IExpression expression, IParserContext context, int startIndex, int endIndex, IEnumerable<IParseResult> children)
+        public ParseResult(IGrammarExpression expression, IParserContext context, int startIndex, int endIndex, IEnumerable<IParseResult> children)
         {
             Expression = expression;
             Context = context;
@@ -17,7 +17,7 @@ namespace Compiler.Core.Expression
             Children = new List<IParseResult>(children);
         }
 
-        public IExpression Expression { get; }
+        public IGrammarExpression Expression { get; }
 
         public IParserContext Context { get; }
 

@@ -1,13 +1,13 @@
 ﻿namespace Compiler.Core.Expression
 {
-    public class And : IExpression
+    public class And : IGrammarExpression
     {
-        public And(IExpression operand)
+        public And(IGrammarExpression operand)
         {
             Operand = operand;
         }
 
-        public IExpression Operand { get; }
+        public IGrammarExpression Operand { get; }
         public T Accept<T, S>(IVisitor<T, S> visitor, S state)
         {
             return visitor.Visit_And(state, this);

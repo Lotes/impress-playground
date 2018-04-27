@@ -13,7 +13,7 @@ namespace Compiler.Core.Expression
             return new GrammarBuilder();
         }
 
-        public static IExpression Then(this IExpression lhs, params IExpression[] rhss)
+        public static IGrammarExpression Then(this IGrammarExpression lhs, params IGrammarExpression[] rhss)
         {
             return new Sequence(new[] { lhs }.Concat(rhss));
         }

@@ -2,14 +2,14 @@
 
 namespace Compiler.Core.Expression
 {
-    public class Choice: IExpression
+    public class Choice: IGrammarExpression
     {
-        public Choice(IEnumerable<IExpression> choices)
+        public Choice(IEnumerable<IGrammarExpression> choices)
         {
             Choices = choices;
         }
 
-        public IEnumerable<IExpression> Choices { get; }
+        public IEnumerable<IGrammarExpression> Choices { get; }
 
         public T Accept<T, S>(IVisitor<T, S> visitor, S state)
         {

@@ -51,7 +51,7 @@
     <Compile Include="CharSetAddTests.cs" />
     <Compile Include="CharSetOpsTests.cs" />
     <Compile Include="CharSetRemoveTests.cs" />
-    <Compile Include="ExpressionTests.cs" />
+    <Compile Include="GrammarExpressionTests.cs" />
     <Compile Include="GrammarUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

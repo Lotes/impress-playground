@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
-    public class EOF : IExpression
+    public class EOF : IGrammarExpression
     {
         public T Accept<T, S>(IVisitor<T, S> visitor, S state)
         {
