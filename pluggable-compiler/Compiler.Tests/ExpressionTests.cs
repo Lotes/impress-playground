@@ -8,7 +8,7 @@ namespace Compiler.Tests
     public class ExpressionTests
     {
         [TestMethod]
-        public void SequenceString()
+        public void Sequence()
         {
             var grammar = Grammars.New()
                 .NewRule(Expressions.Sequence("hello"), "start", out IRule rule)
@@ -49,6 +49,30 @@ namespace Compiler.Tests
             grammar.Rejects("a");
             grammar.Rejects("aaa");
             grammar.Rejects("");
+        }
+
+        [TestMethod]
+        public void Repetition()
+        {
+            var grammar = Grammars.New()
+                .NewRule(Expressions.Repeat(Expressions.Sequence("aa"), 1, 2), "start", out IRule rule)
+                .Build(rule);
+            grammar.Rejects("aaa");
+            grammar.Accepts("aa");
+            grammar.Accepts("aaaa");
+            grammar.Rejects("aaaaaa");
+            grammar.Rejects("a");
+            grammar.Rejects("");
+        }
+
+        [TestMethod]
+        public void EOF()
+        {
+            var grammar = Grammars.New()
+                .NewRule(Expressions.EOF, "start", out IRule rule)
+                .Build(rule);
+            grammar.Rejects("a");
+            grammar.Accepts("");
         }
     }
 }

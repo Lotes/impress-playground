@@ -1,0 +1,105 @@
+﻿using Compiler.Core.Chars;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace Tests.UnitTests
+{
+    [TestClass]
+    public class CharSetRemoveTests
+    {
+        [TestMethod]
+        public void EmptyCharSet_RemoveSingleCharacter_Success()
+        {
+            var charset = new CharSet();
+            charset.Remove('a');
+            Assert.AreEqual(0, charset.Length);
+        }
+
+        [TestMethod]
+        public void EmptyCharSet_RemoveCharacterRange_Success()
+        {
+            var charset = new CharSet();
+            charset.Remove('a', 'c');
+            Assert.AreEqual(0, charset.Length);
+        }
+
+        [TestMethod]
+        public void OneCharSet_RemoveSingleCharacter_Success()
+        {
+            var charset = new CharSet();
+            charset.Add('a');
+            charset.Remove('a');
+            Assert.AreEqual(0, charset.Length);
+        }
+
+        [TestMethod]
+        public void OneCharSet_RemoveCharacterRange_Success()
+        {
+            var charset = new CharSet();
+            charset.Add('b');
+            charset.Remove('a', 'c');
+            Assert.AreEqual(0, charset.Length);
+        }
+
+        [TestMethod]
+        public void ThreeCharsSet_RemoveSingleCharacterMiddle_Success()
+        {
+            var charset = new CharSet();
+            charset.Add('a', 'c');
+            charset.Remove('b');
+            Assert.AreEqual(2, charset.Length);
+            Assert.IsTrue(charset.Includes('a'));
+            Assert.IsTrue(charset.Includes('c'));
+        }
+
+        [TestMethod]
+        public void ThreeCharsSet_RemoveSingleCharacterLeft_Success()
+        {
+            var charset = new CharSet();
+            charset.Add('a', 'c');
+            charset.Remove('a');
+            Assert.AreEqual(2, charset.Length);
+            Assert.IsTrue(charset.Includes('b'));
+            Assert.IsTrue(charset.Includes('c'));
+        }
+
+        [TestMethod]
+        public void ThreeCharsSet_RemoveSingleCharacterRight_Success()
+        {
+            var charset = new CharSet();
+            charset.Add('a', 'c');
+            charset.Remove('c');
+            Assert.AreEqual(2, charset.Length);
+            Assert.IsTrue(charset.Includes('a'));
+            Assert.IsTrue(charset.Includes('b'));
+        }
+
+        [TestMethod]
+        public void ThreeCharsSet_RemoveCharacterRangeExact_Success()
+        {
+            var charset = new CharSet();
+            charset.Add('a', 'c');
+            charset.Remove('a', 'c');
+            Assert.AreEqual(0, charset.Length);
+        }
+
+        [TestMethod]
+        public void ThreeCharsSet_RemoveCharacterRangeOverlapRight_Success()
+        {
+            var charset = new CharSet();
+            charset.Add('a', 'c');
+            charset.Remove('b', 'd');
+            Assert.AreEqual(1, charset.Length);
+            Assert.IsTrue(charset.Includes('a'));
+        }
+
+        [TestMethod]
+        public void ThreeCharsSet_RemoveCharacterRangeOverlapLeft_Success()
+        {
+            var charset = new CharSet();
+            charset.Add('b', 'd');
+            charset.Remove('a', 'c');
+            Assert.AreEqual(1, charset.Length);
+            Assert.IsTrue(charset.Includes('d'));
+        }
+    }
+}

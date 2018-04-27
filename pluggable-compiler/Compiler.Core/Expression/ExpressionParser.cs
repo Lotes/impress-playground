@@ -136,7 +136,7 @@ namespace Compiler.Core.Expression
                             break;
                     }
                     if (index <= rep.Maximum.Value)
-                        return new ParsingState(true, new ParseResult(rep, context, start, end, children));
+                        return new ParsingState(true, new ParseResult(rep, context, start, end-1, children));
                     else
                         return new ParsingState(false, null);
                 }
@@ -147,7 +147,7 @@ namespace Compiler.Core.Expression
                         end += itResult.Result.GetLength();
                         children.AddLast(itResult.Result);
                     }
-                    return new ParsingState(true, new ParseResult(rep, context, start, end, children));
+                    return new ParsingState(true, new ParseResult(rep, context, start, end-1, children));
                 }
             }
 

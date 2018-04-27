@@ -32,5 +32,10 @@ namespace Compiler.Core.Expression
         {
             return new Call(rule);
         }
+
+        public static IExpression Repeat(IExpression expression, int min, int? max = null)
+        {
+            return new Repetition(expression, min, max);
+        }
     }
 }
