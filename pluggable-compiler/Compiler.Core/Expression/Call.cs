@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
-    public class Call: IGrammarExpression
+    public class Call<TResult>: IGrammarExpression<TResult>
     {
-        public Call(IRule rule)
+        public Call(IRule<TResult> rule)
         {
             Rule = rule;
         }
 
-        public IRule Rule { get; }
-        public T Accept<T, S>(IVisitor<T, S> visitor, S state)
+        public IRule<TResult> Rule { get; }
+        public TResult Accept<S>(IVisitor<S> visitor, S state)
         {
             return visitor.Visit_Call(state, this);
         }

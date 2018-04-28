@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
-    public class ParseResult : IParseResult
+    public class ParseResult<TResult> : IParseResult<TResult>
     {
-        public ParseResult(IGrammarExpression expression, IParserContext context, int startIndex, int endIndex, IEnumerable<IParseResult> children)
+        public ParseResult(IGrammarExpression<TResult> expression, IParserContext context, ICursor start, ICursor end, IEnumerable<IParseResult> children)
         {
             Expression = expression;
             Context = context;
-            Start = new Cursor(startIndex);
-            End = new Cursor(endIndex);
+            Start = start;
+            End = end;
             Children = new List<IParseResult>(children);
         }
 
-        public IGrammarExpression Expression { get; }
+        public IGrammarExpression<TResult> Expression { get; }
 
         public IParserContext Context { get; }
 

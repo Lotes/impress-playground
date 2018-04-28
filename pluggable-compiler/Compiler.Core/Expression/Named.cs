@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
-    public class Named : IGrammarExpression
+    public class Named<TResult, TOperand> : IGrammarExpression<TResult>
     {
         public string Name { get; }
-        public IGrammarExpression Expression { get; }
+        public IGrammarExpression<TOperand> Expression { get; }
 
-        public T Accept<T, S>(IVisitor<T, S> visitor, S state)
+        public TResult Accept<S>(IVisitor<S> visitor, S state)
         {
             return visitor.Visit_Named(state, this);
         }

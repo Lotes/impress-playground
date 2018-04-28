@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
-    public interface IGrammarExpression
+    public interface IGrammarExpression<TResult>
     {
-        TResult Accept<TResult, TState>(IVisitor<TResult, TState> visitor, TState state);
+        TResult Accept<TState>(IVisitor<TState> visitor, TState state);
     }
 }

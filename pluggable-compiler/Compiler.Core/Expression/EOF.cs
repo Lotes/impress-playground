@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
-    public class EOF : IGrammarExpression
+    public class EOF<TResult> : IGrammarExpression<TResult>
     {
-        public T Accept<T, S>(IVisitor<T, S> visitor, S state)
+        public TResult Accept<S>(IVisitor<S> visitor, S state)
         {
             return visitor.Visit_EOF(state, this);
         }

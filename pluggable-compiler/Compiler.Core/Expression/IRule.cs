@@ -1,8 +1,8 @@
 ﻿namespace Compiler.Core.Expression
 {
-    public interface IRule
+    public interface IRule<TResult>
     {
         string HintName { get; }
-        IGrammarExpression Expression { get; }
+        IGrammarExpression<TResult> Expression { get; }
     }
 }

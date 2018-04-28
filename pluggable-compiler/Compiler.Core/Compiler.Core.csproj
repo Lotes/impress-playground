@@ -89,14 +89,25 @@
     <Compile Include="Expression\IGrammarExpression.cs" />
     <Compile Include="Expression\IParseResult.cs" />
     <Compile Include="Expression\IRule.cs" />
-    <Compile Include="Expression\IVisitor.cs" />
     <Compile Include="Expression\Not.cs" />
     <Compile Include="Expression\ParseResultExtensions.cs" />
     <Compile Include="Expression\Grammars.cs" />
     <Compile Include="Expression\Repetition.cs" />
-    <Compile Include="Expression\Sequence.cs" />
+    <Compile Include="Expression\Sequence.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Sequence.generated.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Expression\Sequence.generated.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Sequence.generated.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
