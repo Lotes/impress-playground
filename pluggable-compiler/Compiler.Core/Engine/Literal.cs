@@ -1,7 +1,7 @@
 ﻿using Compiler.Core.Expression;
 using System;
 
-namespace Compiler.Core.Engine.Builder
+namespace Compiler.Core.Engine
 {
     public class Literal: ILexicalDefinition
     {

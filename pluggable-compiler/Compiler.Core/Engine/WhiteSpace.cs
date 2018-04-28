@@ -1,6 +1,6 @@
 ﻿using Compiler.Core.Expression;
 
-namespace Compiler.Core.Engine.Builder
+namespace Compiler.Core.Engine
 {
     public class WhiteSpace: ILexicalDefinition
     {

@@ -1,4 +1,4 @@
-﻿namespace Compiler.Core.Engine.Builder
+﻿namespace Compiler.Core.Engine
 {
     public enum CoercionType
     {
