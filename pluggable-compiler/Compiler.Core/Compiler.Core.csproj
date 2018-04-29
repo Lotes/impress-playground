@@ -59,6 +59,7 @@
     <Compile Include="Engine\DataTypes\PartialGrammar.cs" />
     <Compile Include="Engine\DataTypes\StatementDefinition.cs" />
     <Compile Include="Engine\DataTypes\UnaryOperation.cs" />
+    <Compile Include="Engine\SyntaxTree\LiteralExpression.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Expression\EOF.cs" />
     <Compile Include="Expression\ExpressionParser.cs" />
