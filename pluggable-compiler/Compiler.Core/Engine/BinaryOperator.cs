@@ -8,6 +8,7 @@ namespace Compiler.Core.Engine
         {
             Priority = priority;
             PartialGrammar = partialGrammar;
+            Associativity = associativity;
         }
 
         public int Priority { get; }
