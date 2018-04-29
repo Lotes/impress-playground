@@ -1,27 +1,82 @@
 ﻿using Compiler.Core.Expression;
 using System;
+using System.Collections.Generic;
 
 namespace Compiler.Core.Engine
 {
-    public class ParserBuilder : IParserBuilder
+    public partial class ParserBuilder : IParserBuilder
     {
-        private ToolKit kit = new ToolKit();
-        private IGrammarBuilder grammarBuilder;
+        //placeholder rules
+        private Rule expression = new Rule(Expressions.Epsilon, "Expression");
+        private Rule statement = new Rule(Expressions.Epsilon, "Statement");
+        private Rule whiteSpaceZero = new Rule(Expressions.Epsilon, "_");
+        private Rule whiteSpaceOne = new Rule(Expressions.Epsilon, "__");
 
-        public ParserBuilder(IGrammarBuilder grammarBuilder)
-        {
-            this.grammarBuilder = grammarBuilder;
-        }
+        //parser part collections
+        private ICollection<BinaryOperator> binaryOperators = new HashSet<BinaryOperator>();
+        private ICollection<UnaryOperator> unaryOperators = new HashSet<UnaryOperator>();
+        private ICollection<IBinaryOperation> binaryOperation = new HashSet<IBinaryOperation>();
+        private ICollection<IUnaryOperation> unaryOperation = new HashSet<IUnaryOperation>();
+        private ICollection<WhiteSpace> whiteSpaces = new HashSet<WhiteSpace>();
+        private ICollection<ExpressionDefinition> expressionDefinitions = new HashSet<ExpressionDefinition>();
+        private ICollection<StatementDefinition> statementDefinitions = new HashSet<StatementDefinition>();
 
-        public void AddBinaryOperation<TLeft, TRight>(BinaryOperator op, Func<IExpression, IExpression, IExpression> definition, int priority = 0)
+        public ParserBuilder()
         {
             
         }
-
-        public void AddBinaryOperator(Func<IGrammarBuilder, IGrammar> generateGrammar, int priority = 0)
+        
+        public BinaryOperator AddBinaryOperator(Func<PartialGrammarBuilder, IGrammar> generateGrammar, Associativity associativity, int priority = 0)
         {
-            var op = new BinaryOperator(generateGrammar(grammarBuilder), priority);
-            kit.BinaryOperators.Add(op);
+            var partialBuilder = NewPartialGrammarBuilder();
+            var op = new BinaryOperator(generateGrammar(partialBuilder), priority, associativity);
+            binaryOperators.Add(op);
+            return op;
+        }
+
+        public UnaryOperator AddUnaryOperator(Func<PartialGrammarBuilder, IGrammar> generateGrammar, Associativity associativity, int priority = 0)
+        {
+            var partialBuilder = NewPartialGrammarBuilder();
+            var op = new UnaryOperator(generateGrammar(partialBuilder), priority, associativity);
+            unaryOperators.Add(op);
+            return op;
+        }
+
+        public void AddWhiteSpace(Func<PartialGrammarBuilder, IGrammar> generate, int priority = 0)
+        {
+            var partialBuilder = NewPartialGrammarBuilder();
+            whiteSpaces.Add(new WhiteSpace(generate(partialBuilder), priority));
+        }
+
+        private PartialGrammarBuilder NewPartialGrammarBuilder()
+        {
+            return new PartialGrammarBuilder(expression, statement, whiteSpaceZero, whiteSpaceOne);
+        }
+
+        public void AddExpressionDefinition(Func<PartialGrammarBuilder, IGrammar> generate, Func<IParseResult, IExpression> definition, int priority)
+        {
+            var builder = NewPartialGrammarBuilder();
+            var grammar = generate(builder);
+            var result = new ExpressionDefinition(grammar, definition, priority);
+            expressionDefinitions.Add(result);
+        }
+
+        public void AddStatementDefinition(Func<PartialGrammarBuilder, IGrammar> generate, Func<IParseResult, IStatement> toStatement, int priority = 0)
+        {
+            var builder = NewPartialGrammarBuilder();
+            var grammar = generate(builder);
+            var result = new StatementDefinition(grammar, toStatement, priority);
+            statementDefinitions.Add(result);
+        }
+
+        public void AddBinaryOperation<TLeft, TRight, TResult>(BinaryOperator op, Func<TLeft, TRight, TResult> definition)
+        {
+                        
+        }
+
+        public void AddUnaryOperation<TOperand, TResult>(UnaryOperator op, Func<TOperand, TResult> definition)
+        {
+            
         }
 
         public void AddCoercion<TSource, TTarget>(CoercionType type, Func<TSource, TTarget> convert)
@@ -29,41 +84,9 @@ namespace Compiler.Core.Engine
             
         }
 
-        public void AddCustomExpression(Func<IGrammarBuilder, IGrammar> generateGrammar, Func<IParseResult, IExpression> definition)
-        {
-            
-        }
-
-        public void AddLiteralDefinition(Func<IGrammarBuilder, IGrammar> generateGrammar, Func<IParseResult, IExpression> toTarget, int priority = 0)
-        {
-            var grammar = generateGrammar(grammarBuilder);
-            var literal = new Literal(grammar, toTarget, priority);
-            kit.Literals.Add(literal);
-        }
-
-        public void AddStatementDefintion(Func<IGrammarBuilder, IGrammar> generateGrammar, Func<IParseResult, IStatement> toStatement, int priority = 0)
-        {
-            
-        }
-
-        public void AddUnaryOperation<TOperand>(IUnaryOperator op, Func<IExpression, IExpression> definition, int priority = 0)
-        {
-            
-        }
-
-        public void AddUnaryOperator(Func<IGrammarBuilder, IGrammar> generateGrammar, int priority = 0)
-        {
-            
-        }
-
-        public void AddWhiteSpace(Func<IGrammarBuilder, IGrammar> generateGrammar, int priority = 0)
-        {
-            kit.WhiteSpaces.Add(new WhiteSpace(generateGrammar(grammarBuilder), priority));
-        }
-
         public IParser Build()
         {
-            return new Parser(kit);
+            return new Parser(null);
         }
     }
 }

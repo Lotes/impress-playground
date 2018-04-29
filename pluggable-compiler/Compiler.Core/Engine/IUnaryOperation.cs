@@ -4,7 +4,7 @@ namespace Compiler.Core.Engine
 {
     public interface IUnaryOperation
     {
-        IUnaryOperator Operator { get; }
+        UnaryOperator Operator { get; }
         bool Accept(Type operand);
         Type Validate(IValidationContext context, Type operand);
         object Evaluate(IExecutionContext context, object operand);

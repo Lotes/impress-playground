@@ -45,12 +45,17 @@
     <Compile Include="Chars\CharSetExtensions.cs" />
     <Compile Include="Chars\ICharSet.cs" />
     <Compile Include="Chars\SetMode.cs" />
+    <Compile Include="DictionaryExtensions.cs" />
     <Compile Include="Engine\BinaryOperationExpression.cs" />
     <Compile Include="Engine\CoercionType.cs" />
+    <Compile Include="Engine\ExpressionDefinition.cs" />
     <Compile Include="Engine\IBinaryOperation.cs" />
     <Compile Include="Engine\BinaryOperator.cs" />
     <Compile Include="Engine\ICoercionOperation.cs" />
     <Compile Include="Engine\Associativity.cs" />
+    <Compile Include="Engine\PartialGrammarBuilder.cs" />
+    <Compile Include="Engine\PartialGrammar.cs" />
+    <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Expression\EOF.cs" />
     <Compile Include="Expression\ExpressionParser.cs" />
     <Compile Include="Expression\Expressions.cs" />
