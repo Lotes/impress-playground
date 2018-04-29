@@ -8,8 +8,9 @@ namespace Compiler.Core.Engine
     public interface IBinaryOperation
     {
         BinaryOperator Operator { get; }
-        bool Accept(Type lhs, Type rhs);
-        Type Validate(IValidationContext context, Type lhs, Type rhs);
-        object Evaluate(IExecutionContext context, object lhs, object rhs);
+        Type LeftOperand { get; }
+        Type RightOperand { get; }
+        Type Result { get; }
+        Func<object, object, object> Apply { get; }
     }
 }

@@ -2,12 +2,6 @@
 
 namespace Compiler.Core.Engine
 {
-    public interface IExpression
-    {
-        Type Validate(IValidationContext context);
-        object Evaluate(IExecutionContext context);
-    }
-
     public class LiteralExpression: IExpression
     {
         private object value;

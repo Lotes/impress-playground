@@ -11,6 +11,6 @@ namespace Compiler.Core.Engine
         Type SourceType { get; }
         Type TargetType { get; }
         CoercionType CoercionType { get; }
-        object Convert(object source);
+        Func<object, object> Convert { get; }
     }
 }

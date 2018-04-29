@@ -67,5 +67,10 @@ namespace Compiler.Core.Expression
         {
             return new Repetition(expression, 0, 1);
         }
+
+        public static IGrammarExpression Named(string name, IGrammarExpression expression)
+        {
+            return new Named(name, expression);
+        }
     }
 }

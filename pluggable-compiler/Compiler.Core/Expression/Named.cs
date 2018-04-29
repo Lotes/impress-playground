@@ -8,6 +8,12 @@ namespace Compiler.Core.Expression
 {
     public class Named : IGrammarExpression
     {
+        public Named(string name, IGrammarExpression expression)
+        {
+            Name = name;
+            Expression = expression;
+        }
+
         public string Name { get; }
         public IGrammarExpression Expression { get; }
 

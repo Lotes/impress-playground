@@ -22,5 +22,11 @@ namespace Compiler.Core
         {
             return @this.Concat(added);
         }
+
+        public static void AddRange<T>(this ICollection<T> _this, IEnumerable<T> range)
+        {
+            foreach (var element in range)
+                _this.Add(element);
+        }
     }
 }
