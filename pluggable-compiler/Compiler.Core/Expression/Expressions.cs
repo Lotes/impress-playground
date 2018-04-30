@@ -13,10 +13,10 @@ namespace Compiler.Core.Expression
 
         public static readonly IGrammarExpression EOF = new EOF();
 
-        public static IGrammarExpression Sequence(string str, bool ignoreCase = false)
+        /*public static T ReferencedAs<T>(IGrammarExpression<T> expr, )
         {
-            return new Sequence(str, ignoreCase);
-        }
+
+        }*/
 
         public static IGrammarExpression Sequence(params IGrammarExpression[] elements)
         {

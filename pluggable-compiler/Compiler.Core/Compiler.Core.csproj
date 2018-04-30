@@ -101,6 +101,7 @@
     <Compile Include="Expression\ParseResultExtensions.cs" />
     <Compile Include="Expression\Grammars.cs" />
     <Compile Include="Expression\Repetition.cs" />
+    <Compile Include="Expression\Return.cs" />
     <Compile Include="Expression\Sequence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

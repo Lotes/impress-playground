@@ -20,7 +20,7 @@ namespace Compiler.Tests
             var opBinaryPlus = builder
                 .AddBinaryOperator(g => 
                     g.NewRule("+",
-                        Sequence("+"), out IRule plusOperator
+                        Sequence(new CharacterClass(new CharSet('+'))), out IRule plusOperator
                     ).Build(plusOperator), Associativity.Left, 
                     20
                 );
@@ -32,22 +32,14 @@ namespace Compiler.Tests
                     result => new LiteralExpression(typeof(double), double.Parse(result.GetContent())),
                     20
                 );
-            builder
-                .AddExpressionDefinition(g =>
-                    g.NewRule("Digit", CharacterClass(new CharRange('0', '9')), out IRule digit)
-                     .NewRule("Number", OneOrMore(Call(digit)).Then(Optional(Char('.').Then(OneOrMore(Call(digit))))), out IRule number)
-                     .Build(number),
-                    result => new LiteralExpression(typeof(double), double.Parse(result.GetContent())),
-                    0
-                );
-            /*const string name = "expr";
+            const string name = "expr";
             builder
                 .AddExpressionDefinition(g =>
                     g.NewRule("Parentheses", Char('(').Then(Named(name, Call(g.WhiteSpaceZeroOrMore))).Then(Call(g.Expression)).Then(Call(g.WhiteSpaceZeroOrMore)).Then(Char(')')), out IRule parenthesesRule)
                      .Build(parenthesesRule),
-                    result => result.FindByName(name).Expression,
+                    result => null,//result.FindByName(name).As<IExpression>().Value,
                     10000
-                );*/
+                );
             builder
                 .AddWhiteSpace(g => 
                     g.NewRule("\\s", CharacterClass('\n', '\r', '\t', ' '), out IRule wsRule)

@@ -6,6 +6,16 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
+    public class ParseResult<TType>: ParseResult
+    {
+        public ParseResult(IGrammarExpression expression, IParserContext context, int startIndex, int endIndex, IEnumerable<IParseResult> children, TType value)
+            : base(expression, context, startIndex, endIndex, children)
+        {
+            Value = value;
+        }
+        public TType Value { get; }
+    }
+
     public class ParseResult : IParseResult
     {
         public ParseResult(IGrammarExpression expression, IParserContext context, int startIndex, int endIndex, IEnumerable<IParseResult> children)

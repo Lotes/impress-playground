@@ -10,4 +10,9 @@ namespace Compiler.Core.Expression
         ICursor End { get; }
         IReadOnlyList<IParseResult> Children { get; }
     }
+
+    public interface IParseResult<T>: IParseResult
+    {
+        T Value { get; }
+    }
 }

@@ -151,6 +151,15 @@ namespace Compiler.Core.Expression
                 }
             }
 
+            public ParsingState Visit_Return<TType>(int state, Return<TType> @return)
+            {
+                var parsed = @return.Expression.Accept(this, state);
+                if (!parsed.Ok)
+                    return new ParsingState(false, null);
+                var value = @return.Convert(parsed.Result);
+                return new ParsingState(true, new ParseResult<TType>(parsed.Result.Expression, context, parsed.Result.Start.Index, parsed.Result.End.Index, new[] { parsed.Result }, value));
+            }
+
             public ParsingState Visit_Sequence(int state, Sequence sequence)
             {
                 var pos = state;
