@@ -18,8 +18,29 @@ Func<int, string> otype = num => "TOperand"+num;
 Func<int, IEnumerable<int>> range = num => Enumerable.Range(1, num); 
 Func<int, string> otypeList = num => string.Join(", ", range(num).Select(n => "TOperand"+n));
 Func<int, string> oformals = num => string.Join(", ", range(num).Select(n => exprType+"<TOperand"+n+"> operand"+n));
+Func<int, string> oactuals = num => string.Join(", ", range(num).Select(n => "operand"+n));
 
 #>
+    public static partial class Expressions
+    {
+<#
+for(int count=2; count<=maxCount; count++)
+{
+#>
+        public static IGrammarExpression<Tuple<<#=otypeList(count)#>>> Sequence<<#=otypeList(count)#>>(<#=oformals(count)#>)
+        {
+            return new Sequence<<#=otypeList(count)#>>(<#=oactuals(count)#>);
+        }
+
+        public static IGrammarExpression<Tuple<<#=otypeList(count)#>>> Then<<#=otypeList(count)#>>(this <#=oformals(count)#>)
+        {
+            return new Sequence<<#=otypeList(count)#>>(<#=oactuals(count)#>);
+        }
+<#
+}
+#>
+    }
+
 	public interface ISequenceParserVisitor
     {
 <#

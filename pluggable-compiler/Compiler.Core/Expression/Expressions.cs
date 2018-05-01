@@ -7,30 +7,35 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
-    public static class Expressions
+    public static partial class Expressions
     {
         public static readonly IGrammarExpression<string> Epsilon = new CharacterClass(new CharSet());
 
-        public static readonly IGrammarExpression<string> EOF = new EOF<string>();
+        public static readonly IGrammarExpression<string> EOF = new EOF();
 
-        public static IGrammarExpression Sequence(params IGrammarExpression[] elements)
+        public static IGrammarBuilder New()
         {
-            return new Sequence(elements);
+            return new GrammarBuilder();
         }
 
-        public static IGrammarExpression Choice(params IGrammarExpression[] choices)
+        public static IGrammarExpression<TResult> Choice<TResult>(params IGrammarExpression<TResult>[] choices)
         {
-            return new Choice(choices);
+            return new Choice<TResult>(choices);
         }
 
-        public static IGrammarExpression Call(IRule rule)
+        public static IGrammarExpression<TResult> Call<TResult>(IRule<TResult> rule)
         {
-            return new Call(rule);
+            return new Call<TResult>(rule);
         }
 
-        public static IGrammarExpression Repeat(IGrammarExpression expression, int min, int? max = null)
+        public static IGrammarExpression<TResult> Returns<TSource, TResult>(this IGrammarExpression<TSource> expr, Func<TSource, TResult> convert)
         {
-            return new Repetition(expression, min, max);
+            return new Return<TSource, TResult>(expr, convert);
+        }
+
+        public static IGrammarExpression<IReadOnlyList<TResult>> Repeat<TResult>(IGrammarExpression<TResult> expression, int min, int? max = null)
+        {
+            return new Repetition<TResult>(expression, min, max);
         }
     }
 }

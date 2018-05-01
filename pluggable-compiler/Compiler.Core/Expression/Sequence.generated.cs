@@ -5,6 +5,73 @@ using System.Linq;
 
 namespace Compiler.Core.Expression
 {
+    public static partial class Expressions
+    {
+        public static IGrammarExpression<Tuple<TOperand1, TOperand2>> Sequence<TOperand1, TOperand2>(IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2)
+        {
+            return new Sequence<TOperand1, TOperand2>(operand1, operand2);
+        }
+
+        public static IGrammarExpression<Tuple<TOperand1, TOperand2>> Then<TOperand1, TOperand2>(this IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2)
+        {
+            return new Sequence<TOperand1, TOperand2>(operand1, operand2);
+        }
+        public static IGrammarExpression<Tuple<TOperand1, TOperand2, TOperand3>> Sequence<TOperand1, TOperand2, TOperand3>(IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2, IGrammarExpression<TOperand3> operand3)
+        {
+            return new Sequence<TOperand1, TOperand2, TOperand3>(operand1, operand2, operand3);
+        }
+
+        public static IGrammarExpression<Tuple<TOperand1, TOperand2, TOperand3>> Then<TOperand1, TOperand2, TOperand3>(this IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2, IGrammarExpression<TOperand3> operand3)
+        {
+            return new Sequence<TOperand1, TOperand2, TOperand3>(operand1, operand2, operand3);
+        }
+        public static IGrammarExpression<Tuple<TOperand1, TOperand2, TOperand3, TOperand4>> Sequence<TOperand1, TOperand2, TOperand3, TOperand4>(IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2, IGrammarExpression<TOperand3> operand3, IGrammarExpression<TOperand4> operand4)
+        {
+            return new Sequence<TOperand1, TOperand2, TOperand3, TOperand4>(operand1, operand2, operand3, operand4);
+        }
+
+        public static IGrammarExpression<Tuple<TOperand1, TOperand2, TOperand3, TOperand4>> Then<TOperand1, TOperand2, TOperand3, TOperand4>(this IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2, IGrammarExpression<TOperand3> operand3, IGrammarExpression<TOperand4> operand4)
+        {
+            return new Sequence<TOperand1, TOperand2, TOperand3, TOperand4>(operand1, operand2, operand3, operand4);
+        }
+        public static IGrammarExpression<Tuple<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5>> Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5>(IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2, IGrammarExpression<TOperand3> operand3, IGrammarExpression<TOperand4> operand4, IGrammarExpression<TOperand5> operand5)
+        {
+            return new Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5>(operand1, operand2, operand3, operand4, operand5);
+        }
+
+        public static IGrammarExpression<Tuple<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5>> Then<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5>(this IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2, IGrammarExpression<TOperand3> operand3, IGrammarExpression<TOperand4> operand4, IGrammarExpression<TOperand5> operand5)
+        {
+            return new Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5>(operand1, operand2, operand3, operand4, operand5);
+        }
+        public static IGrammarExpression<Tuple<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6>> Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6>(IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2, IGrammarExpression<TOperand3> operand3, IGrammarExpression<TOperand4> operand4, IGrammarExpression<TOperand5> operand5, IGrammarExpression<TOperand6> operand6)
+        {
+            return new Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6>(operand1, operand2, operand3, operand4, operand5, operand6);
+        }
+
+        public static IGrammarExpression<Tuple<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6>> Then<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6>(this IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2, IGrammarExpression<TOperand3> operand3, IGrammarExpression<TOperand4> operand4, IGrammarExpression<TOperand5> operand5, IGrammarExpression<TOperand6> operand6)
+        {
+            return new Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6>(operand1, operand2, operand3, operand4, operand5, operand6);
+        }
+        public static IGrammarExpression<Tuple<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6, TOperand7>> Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6, TOperand7>(IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2, IGrammarExpression<TOperand3> operand3, IGrammarExpression<TOperand4> operand4, IGrammarExpression<TOperand5> operand5, IGrammarExpression<TOperand6> operand6, IGrammarExpression<TOperand7> operand7)
+        {
+            return new Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6, TOperand7>(operand1, operand2, operand3, operand4, operand5, operand6, operand7);
+        }
+
+        public static IGrammarExpression<Tuple<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6, TOperand7>> Then<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6, TOperand7>(this IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2, IGrammarExpression<TOperand3> operand3, IGrammarExpression<TOperand4> operand4, IGrammarExpression<TOperand5> operand5, IGrammarExpression<TOperand6> operand6, IGrammarExpression<TOperand7> operand7)
+        {
+            return new Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6, TOperand7>(operand1, operand2, operand3, operand4, operand5, operand6, operand7);
+        }
+        public static IGrammarExpression<Tuple<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6, TOperand7, TOperand8>> Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6, TOperand7, TOperand8>(IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2, IGrammarExpression<TOperand3> operand3, IGrammarExpression<TOperand4> operand4, IGrammarExpression<TOperand5> operand5, IGrammarExpression<TOperand6> operand6, IGrammarExpression<TOperand7> operand7, IGrammarExpression<TOperand8> operand8)
+        {
+            return new Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6, TOperand7, TOperand8>(operand1, operand2, operand3, operand4, operand5, operand6, operand7, operand8);
+        }
+
+        public static IGrammarExpression<Tuple<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6, TOperand7, TOperand8>> Then<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6, TOperand7, TOperand8>(this IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2, IGrammarExpression<TOperand3> operand3, IGrammarExpression<TOperand4> operand4, IGrammarExpression<TOperand5> operand5, IGrammarExpression<TOperand6> operand6, IGrammarExpression<TOperand7> operand7, IGrammarExpression<TOperand8> operand8)
+        {
+            return new Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6, TOperand7, TOperand8>(operand1, operand2, operand3, operand4, operand5, operand6, operand7, operand8);
+        }
+    }
+
 	public interface ISequenceParserVisitor
     {
         MayBe<IParseResult<Tuple<TOperand1>>> Visit_Sequence<TOperand1>(int position, Sequence<TOperand1> sequence);
