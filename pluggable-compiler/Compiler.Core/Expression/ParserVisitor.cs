@@ -10,8 +10,9 @@ namespace Compiler.Core.Expression
     {
         private IParserContext context;
 
-        public ParserVisitor()
+        public ParserVisitor(IParserContext context)
         {
+            this.context = context;
         }
 
         public MayBe<IParseResult<TResult>> Visit_And<TResult>(int position, And<TResult> and)

@@ -63,6 +63,7 @@
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Expression\EOF.cs" />
     <Compile Include="Expression\Expressions.cs" />
+    <Compile Include="Expression\Grammar.cs" />
     <Compile Include="Expression\GrammarBuilder.cs" />
     <Compile Include="Expression\IExpressionParser.cs" />
     <Compile Include="Expression\IGrammarBuilder.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Expression\ParserVisitor.cs" />
     <Compile Include="Expression\Repetition.cs" />
     <Compile Include="Expression\Return.cs" />
+    <Compile Include="Expression\Rule.cs" />
     <Compile Include="Expression\Sequence.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

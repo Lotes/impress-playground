@@ -7,9 +7,24 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
+    using static Expressions;
+
     public static partial class Expressions
     {
         public static readonly IGrammarExpression<string> Epsilon = new CharacterClass(new CharSet());
+
+        public static IGrammarExpression<string> String(string str, bool ignoreCase = true)
+        {
+            if (string.IsNullOrEmpty(str))
+                return Epsilon;
+            var first = str[0];
+            IGrammarExpression<string> result = new CharacterClass(new CharSet(first, ignoreCase));
+            for (var index = 1; index < str.Length; index++)
+                result = Sequence(result, new CharacterClass(new CharSet(str[index]))).Returns(string.Concat);
+            return result;
+        }
+
+        public static IGrammarExpression<TResult> Null<TResult>() { return (IGrammarExpression<TResult>)null; }
 
         public static readonly IGrammarExpression<string> EOF = new EOF();
         public static IGrammarExpression<string> Char(char c)

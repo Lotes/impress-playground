@@ -2,16 +2,16 @@
 
 namespace Compiler.Core.Engine
 {
-    public class UnaryOperator : ILexicalDefinition
+    public class UnaryOperator : ILexicalDefinition<string>
     {
-        public UnaryOperator(IGrammar partialGrammar, int priority, Associativity associativity)
+        public UnaryOperator(IGrammar<string> partialGrammar, int priority, Associativity associativity)
         {
             PartialGrammar = partialGrammar;
             Priority = priority;
             Associativity = associativity;
         }
 
-        public IGrammar PartialGrammar { get; }
+        public IGrammar<string> PartialGrammar { get; }
         public int Priority { get; }
         public Associativity Associativity { get; }
     }

@@ -3,17 +3,15 @@ using System;
 
 namespace Compiler.Core.Engine
 {
-    public class StatementDefinition : ILexicalDefinition
+    public class StatementDefinition : ILexicalDefinition<IStatement>
     {
-        public StatementDefinition(IGrammar partialGrammar, Func<IParseResult, IStatement> toStatement, int priority)
+        public StatementDefinition(IGrammar<IStatement> partialGrammar, int priority)
         {
             PartialGrammar = partialGrammar;
-            ToStatement = toStatement;
             Priority = priority;
         }
 
-        public IGrammar PartialGrammar { get; }
-        public Func<IParseResult, IStatement> ToStatement { get; }
+        public IGrammar<IStatement> PartialGrammar { get; }
         public int Priority { get; }
     }
 }

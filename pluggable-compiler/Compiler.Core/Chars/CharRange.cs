@@ -6,7 +6,7 @@ namespace Compiler.Core.Chars
 {
     public class CharRange: IEnumerable<char>
     {
-        public CharRange(char single, char to)
+        public CharRange(char single)
             : this(single, single) {}
         
         public CharRange(char from, char to, SetMode mode = SetMode.Included)

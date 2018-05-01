@@ -1,4 +1,5 @@
-﻿using Compiler.Core.Expression;
+﻿using Compiler.Core;
+using Compiler.Core.Expression;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -10,24 +11,29 @@ namespace Compiler.Tests
 {
     public static class GrammarUtils
     {
-        public static void Accepts(this IGrammar @this, string str)
+        public static void Accepts<TResult>(this IGrammar<TResult> @this, string str)
         {
-            var ok = @this.Parse(str, out IParseResult result);
+            var ok = @this.Parse(str, out IParseResult<TResult> result);
             Assert.IsTrue(ok);
         }
 
-        public static void Rejects(this IGrammar @this, string str)
+        public static void Rejects<TResult>(this IGrammar<TResult> @this, string str)
         {
-            var ok = @this.Parse(str, out IParseResult result);
+            var ok = @this.Parse(str, out IParseResult<TResult> result);
             Assert.IsFalse(ok);
         }
 
-        private static bool Parse(this IGrammar @this, string str, out IParseResult result)
+        private static bool Parse<TResult>(this IGrammar<TResult> @this, string str, out IParseResult<TResult> result)
         {
-            var parser = new ExpressionParser();
+            result = null;
+            var context = new ParserContext(str, @this);
+            var visitor = new ParserVisitor(context);
             try
             {
-                result = parser.Parse(@this, str);
+                var answer = @this.StartingRule.Expression.ParseAt(visitor, 0);
+                if (answer == MayBe<IParseResult<TResult>>.Nothing)
+                    return false;
+                result = answer.Value;
                 return true;
             }
             catch

@@ -38,7 +38,7 @@ namespace Compiler.Core.Engine
         {
             if (!ownRules.Contains(rule))
                 throw new InvalidOperationException("This rule does not belong to the current rules set!");
-            ((Rule)rule).Expression = peg;
+            ((Rule<TResult>)rule).Expression = peg;
             return this;
         }
     }

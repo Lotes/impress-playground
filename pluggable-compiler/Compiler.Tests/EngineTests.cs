@@ -26,18 +26,18 @@ namespace Compiler.Tests
                 );
             builder
                 .AddExpressionDefinition(g =>
-                    g.NewRule("Digit", Range('0', '9'), out IRule<string> digit)
-                        .NewRule<double>("Number", 
+                    g
+                        .NewRule("Digit", Range('0', '9'), out IRule<string> digit)
+                        .NewRule("Number", 
                             OneOrMore(Call(digit)).Returns(string.Concat)
                             .Then(
                                 Optional(Char('.').Then(OneOrMore(Call(digit))).Returns(string.Concat)).Returns(string.Concat)
                             )
                             .Returns(string.Concat)
-                            .Returns(double.Parse), 
-                            out IRule<double> number
+                            .Returns(str => (IExpression)new LiteralExpression(typeof(double), double.Parse(str))), 
+                            out IRule<IExpression> number
                         )
                         .Build(number),
-                    result => new LiteralExpression(typeof(double), double.Parse(result.GetContent())),
                     20
                 );
             builder
@@ -51,11 +51,10 @@ namespace Compiler.Tests
                             Char(')')
                         ).Returns(tuple => tuple.Item3), out IRule<IExpression> parenthesesRule)
                      .Build(parenthesesRule),
-                    result => null,//result.FindByName(name).As<IExpression>().Value,
                     10000
                 );
             builder
-                .AddWhiteSpace(g => 
+                .AddWhiteSpaceDefinition(g => 
                     g.NewRule("\\s", Chars('\n', '\r', '\t', ' '), out IRule<string> wsRule)
                      .Build(wsRule)
                 );

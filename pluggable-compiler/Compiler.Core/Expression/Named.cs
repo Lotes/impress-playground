@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
+    /// <summary>
+    /// TODO: deprecated
+    /// </summary>
+    /// <typeparam name="TResult"></typeparam>
     public class Named<TResult> : IGrammarExpression<TResult>
     {
         public Named(string name, IGrammarExpression<TResult> expression)

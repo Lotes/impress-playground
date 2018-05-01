@@ -6,57 +6,26 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
-    public class Grammar : IGrammar
-    {
-        public Grammar(IEnumerable<IRule> rules, IRule startAt)
-        {
-            if (startAt == null || !rules.Contains(startAt))
-                throw new ArgumentException(nameof(startAt));
-            var realStart = new Rule(Expressions.Sequence(Expressions.Call(startAt), Expressions.EOF));
-            StartingRule = realStart;
-            Rules = rules.Concat(new[] { realStart }).ToArray();
-        }
-
-        public IRule StartingRule { get; }
-        public IEnumerable<IRule> Rules { get; }
-    }
-
-    public class Rule : IRule
-    {
-        public Rule(IGrammarExpression expression, string hintName = "<no name>")
-        {
-            HintName = hintName;
-            Expression = expression;
-        }
-
-        public string HintName { get; }
-        public IGrammarExpression Expression { get; set; }
-        public override string ToString()
-        {
-            return HintName;
-        }
-    }
-
     public class GrammarBuilder : IGrammarBuilder
     {
-        private HashSet<Rule> rules = new HashSet<Rule>();
-        public IGrammar Build(IRule startAt)
+        private HashSet<IRule> rules = new HashSet<IRule>();
+        public IGrammar<TResult> Build<TResult>(IRule<TResult> startAt)
         {
-            return new Grammar(rules, startAt);
+            return new Grammar<TResult>(rules, startAt);
         }
 
-        public IGrammarBuilder NewRule(IGrammarExpression peg, string hintName, out IRule rule)
+        public IGrammarBuilder NewRule<TResult>(string hintName, IGrammarExpression<TResult> peg, out IRule<TResult> rule)
         {
-            Rule result;
-            rule = result = new Rule(peg, hintName);
+            Rule<TResult> result;
+            rule = result = new Rule<TResult>(hintName, peg);
             rules.Add(result);
             return this;
         }
 
-        public IGrammarBuilder RedefineRule(IRule rule, IGrammarExpression peg)
+        public IGrammarBuilder RedefineRule<TResult>(IRule<TResult> rule, IGrammarExpression<TResult> peg)
         {
             if (rules.Contains(rule))
-                ((Rule)rule).Expression = peg;
+                ((Rule<TResult>)rule).Expression = peg;
             else
                 throw new InvalidOperationException("Builder does not contain that rule!");
             return this;

@@ -2,9 +2,9 @@
 
 namespace Compiler.Core.Engine
 {
-    public class BinaryOperator : ILexicalDefinition
+    public class BinaryOperator : ILexicalDefinition<string>
     {
-        public BinaryOperator(IGrammar partialGrammar, int priority, Associativity associativity)
+        public BinaryOperator(IGrammar<string> partialGrammar, int priority, Associativity associativity)
         {
             Priority = priority;
             PartialGrammar = partialGrammar;
@@ -12,7 +12,7 @@ namespace Compiler.Core.Engine
         }
 
         public int Priority { get; }
-        public IGrammar PartialGrammar { get; }
+        public IGrammar<string> PartialGrammar { get; }
         public Associativity Associativity { get; }
     }
 }

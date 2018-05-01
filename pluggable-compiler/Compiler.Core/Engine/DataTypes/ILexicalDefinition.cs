@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Engine
 {
-    public interface ILexicalDefinition
+    public interface ILexicalDefinition<TResult>
     {
-        IGrammar PartialGrammar { get; }
+        IGrammar<TResult> PartialGrammar { get; }
         int Priority { get; }
     }
 }

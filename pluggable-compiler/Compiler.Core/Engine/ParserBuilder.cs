@@ -10,10 +10,10 @@ namespace Compiler.Core.Engine
     public partial class ParserBuilder : IParserBuilder
     {
         //placeholder rules
-        private Rule expression = new Rule(Expressions.Epsilon, "Expression");
-        private Rule statement = new Rule(Expressions.Epsilon, "Statement");
-        private Rule whiteSpaceZero = new Rule(Expressions.Epsilon, "_");
-        private Rule whiteSpaceOne = new Rule(Expressions.Epsilon, "__");
+        private Rule<IExpression> expression = new Rule<IExpression>("Expression", Null<IExpression>());
+        private Rule<IStatement> statement = new Rule<IStatement>("Statement", Null<IStatement>());
+        private Rule<string> whiteSpaceZero = new Rule<string>("_", Null<string>());
+        private Rule<string> whiteSpaceOne = new Rule<string>("__", Null<string>());
 
         //parser part collections
         private ICollection<BinaryOperator> binaryOperators = new HashSet<BinaryOperator>();
@@ -30,7 +30,7 @@ namespace Compiler.Core.Engine
             
         }
         
-        public BinaryOperator AddBinaryOperator(Func<PartialGrammarBuilder, IGrammar> generateGrammar, Associativity associativity, int priority = 0)
+        public BinaryOperator AddBinaryOperator(Func<PartialGrammarBuilder, IGrammar<string>> generateGrammar, Associativity associativity, int priority = 0)
         {
             var partialBuilder = NewPartialGrammarBuilder();
             var op = new BinaryOperator(generateGrammar(partialBuilder), priority, associativity);
@@ -38,7 +38,7 @@ namespace Compiler.Core.Engine
             return op;
         }
 
-        public UnaryOperator AddUnaryOperator(Func<PartialGrammarBuilder, IGrammar> generateGrammar, Associativity associativity, int priority = 0)
+        public UnaryOperator AddUnaryOperator(Func<PartialGrammarBuilder, IGrammar<string>> generateGrammar, Associativity associativity, int priority = 0)
         {
             var partialBuilder = NewPartialGrammarBuilder();
             var op = new UnaryOperator(generateGrammar(partialBuilder), priority, associativity);
@@ -46,7 +46,7 @@ namespace Compiler.Core.Engine
             return op;
         }
 
-        public void AddWhiteSpace(Func<PartialGrammarBuilder, IGrammar> generate, int priority = 0)
+        public void AddWhiteSpaceDefinition(Func<PartialGrammarBuilder, IGrammar<string>> generate, int priority = 0)
         {
             var partialBuilder = NewPartialGrammarBuilder();
             whiteSpaces.Add(new WhiteSpace(generate(partialBuilder), priority));
@@ -57,19 +57,19 @@ namespace Compiler.Core.Engine
             return new PartialGrammarBuilder(expression, statement, whiteSpaceZero, whiteSpaceOne);
         }
 
-        public void AddExpressionDefinition(Func<PartialGrammarBuilder, IGrammar> generate, Func<IParseResult, IExpression> definition, int priority)
+        public void AddExpressionDefinition(Func<PartialGrammarBuilder, IGrammar<IExpression>> generate, int priority)
         {
             var builder = NewPartialGrammarBuilder();
             var grammar = generate(builder);
-            var result = new ExpressionDefinition(grammar, definition, priority);
+            var result = new ExpressionDefinition(grammar, priority);
             expressionDefinitions.Add(result);
         }
 
-        public void AddStatementDefinition(Func<PartialGrammarBuilder, IGrammar> generate, Func<IParseResult, IStatement> toStatement, int priority = 0)
+        public void AddStatementDefinition(Func<PartialGrammarBuilder, IGrammar<IStatement>> generate, int priority = 0)
         {
             var builder = NewPartialGrammarBuilder();
             var grammar = generate(builder);
-            var result = new StatementDefinition(grammar, toStatement, priority);
+            var result = new StatementDefinition(grammar, priority);
             statementDefinitions.Add(result);
         }
 
@@ -96,14 +96,14 @@ namespace Compiler.Core.Engine
             var rules = new List<IRule>();
 
             //prepare whitespace rules
-            var wsStarts = new List<IGrammarExpression>(); 
+            var wsStarts = new List<IGrammarExpression<string>>(); 
             foreach(var ws in this.whiteSpaces.OrderBy(w => w.Priority))
             {
                 rules.AddRange(ws.PartialGrammar.Rules);
-                wsStarts.Add(Call(ws.PartialGrammar.StartingRule));
+                wsStarts.Add(Call<string>(ws.PartialGrammar.StartingRule));
             }
-            whiteSpaceZero.Expression = ZeroOrMore(Choice(wsStarts.ToArray()));
-            whiteSpaceOne.Expression = OneOrMore(Choice(wsStarts.ToArray()));
+            whiteSpaceZero.Expression = ZeroOrMore(Choice(wsStarts.ToArray())).Returns(string.Concat);
+            whiteSpaceOne.Expression = OneOrMore(Choice(wsStarts.ToArray())).Returns(string.Concat);
             rules.Add(whiteSpaceZero);
             rules.Add(whiteSpaceOne);
             

@@ -22,6 +22,18 @@ namespace Compiler.Core.Chars
                 Add(range.From, range.To);
         }
 
+        public CharSet(char c, bool ignoreCase = true)
+            : this()
+        {
+            if (ignoreCase)
+            {
+                Add(c.ToString().ToLower()[0]);
+                Add(c.ToString().ToUpper()[0]);
+            }
+            else
+                Add(c);
+        }
+
         public CharSet(params char[] characters)
             : this()
         {

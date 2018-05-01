@@ -2,15 +2,15 @@
 
 namespace Compiler.Core.Engine
 {
-    public class WhiteSpace: ILexicalDefinition
+    public class WhiteSpace: ILexicalDefinition<string>
     {
-        public WhiteSpace(IGrammar partialGrammar, int priority)
+        public WhiteSpace(IGrammar<string> partialGrammar, int priority)
         {
             Priority = priority;
             PartialGrammar = partialGrammar;
         }
 
         public int Priority { get; }
-        public IGrammar PartialGrammar { get; }
+        public IGrammar<string> PartialGrammar { get; }
     }
 }
