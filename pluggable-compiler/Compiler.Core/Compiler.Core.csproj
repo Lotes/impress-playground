@@ -63,6 +63,7 @@
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Expression\EOF.cs" />
     <Compile Include="Expression\Expressions.cs" />
+    <Compile Include="Expression\Grammar.cs" />
     <Compile Include="Expression\GrammarBuilder.cs" />
     <Compile Include="Expression\IExpressionParser.cs" />
     <Compile Include="Expression\IGrammarBuilder.cs" />
