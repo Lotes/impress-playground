@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
-    public class Named : IGrammarExpression
+    public class Named<TResult> : IGrammarExpression<TResult>
     {
-        public Named(string name, IGrammarExpression expression)
+        public Named(string name, IGrammarExpression<TResult> expression)
         {
             Name = name;
             Expression = expression;
         }
 
         public string Name { get; }
-        public IGrammarExpression Expression { get; }
+        public IGrammarExpression<TResult> Expression { get; }
 
-        public T Accept<T, S>(IVisitor<T, S> visitor, S state)
+        public MayBe<IParseResult<TResult>> ParseAt(IParserVisitor visitor, int position)
         {
-            return visitor.Visit_Named(state, this);
+            return visitor.Visit_Named(position, this);
         }
     }
 }

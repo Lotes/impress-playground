@@ -5,16 +5,17 @@ using Compiler.Core.Expression;
 
 namespace Compiler.Core.Engine
 {
-    public class PartialGrammar : IGrammar
+    public class PartialGrammar<TResult>: IGrammar<TResult>
     {
-        public PartialGrammar(IEnumerable<IRule> ownRules, IRule startAt)
+        public PartialGrammar(IEnumerable<IRule> ownRules, IRule<TResult> startAt)
         {
             if (!ownRules.Contains(startAt))
                 throw new InvalidOperationException("This is not a rule of this set!");
             this.Rules = ownRules.ToArray();
             this.StartingRule = startAt;
         }
-        public IRule StartingRule { get; }
+        IRule IGrammar.StartingRule { get { return StartingRule; } }
         public IEnumerable<IRule> Rules { get; }
+        public IRule<TResult> StartingRule { get; }
     }
 }

@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
-    public class Call: IGrammarExpression
+    public class Call<TResult>: IGrammarExpression<TResult>
     {
-        public Call(IRule rule)
+        public Call(IRule<TResult> rule)
         {
             Rule = rule;
         }
 
-        public IRule Rule { get; }
-        public T Accept<T, S>(IVisitor<T, S> visitor, S state)
+        public IRule<TResult> Rule { get; }
+        public MayBe<IParseResult<TResult>> ParseAt(IParserVisitor visitor, int position)
         {
-            return visitor.Visit_Call(state, this);
+            return visitor.Visit_Call(position, this);
         }
     }
 }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
-    public class EOF : IGrammarExpression
+    public class EOF : IGrammarExpression<string>
     {
-        public T Accept<T, S>(IVisitor<T, S> visitor, S state)
+        public MayBe<IParseResult<string>> ParseAt(IParserVisitor visitor, int position)
         {
-            return visitor.Visit_EOF(state, this);
+            return visitor.Visit_EOF(position, this);
         }
     }
 }

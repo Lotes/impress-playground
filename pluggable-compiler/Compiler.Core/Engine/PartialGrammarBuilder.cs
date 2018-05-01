@@ -9,12 +9,12 @@ namespace Compiler.Core.Engine
     {
         private readonly HashSet<IRule> ownRules = new HashSet<IRule>();
          
-        public readonly IRule Expression;
-        public readonly IRule Statement;
-        public readonly IRule WhiteSpaceZeroOrMore;
-        public readonly IRule WhiteSpaceOneOrMore;
+        public readonly IRule<IExpression> Expression;
+        public readonly IRule<IStatement> Statement;
+        public readonly IRule<string> WhiteSpaceZeroOrMore;
+        public readonly IRule<string> WhiteSpaceOneOrMore;
 
-        public PartialGrammarBuilder(IRule expression, IRule statement, IRule whiteSpaceZeroOrMore, IRule whiteSpacesOneOrMore)
+        public PartialGrammarBuilder(IRule<IExpression> expression, IRule<IStatement> statement, IRule<string> whiteSpaceZeroOrMore, IRule<string> whiteSpacesOneOrMore)
         {
             this.Expression = expression;
             this.Statement = statement;
@@ -22,19 +22,19 @@ namespace Compiler.Core.Engine
             this.WhiteSpaceZeroOrMore = whiteSpaceZeroOrMore;
         }
 
-        public IGrammar Build(IRule startAt)
+        public IGrammar<TResult> Build<TResult>(IRule<TResult> startAt)
         {
-            return new PartialGrammar(ownRules, startAt);
+            return new PartialGrammar<TResult>(ownRules, startAt);
         }
 
-        public IGrammarBuilder NewRule(string hintName, IGrammarExpression peg, out IRule rule)
+        public IGrammarBuilder NewRule<TResult>(string hintName, IGrammarExpression<TResult> peg, out IRule<TResult> rule)
         {
-            rule = new Rule(peg, hintName);
+            rule = new Rule<TResult>(hintName, peg);
             ownRules.Add(rule);
             return this;   
         }
 
-        public IGrammarBuilder RedefineRule(IRule rule, IGrammarExpression peg)
+        public IGrammarBuilder RedefineRule<TResult>(IRule<TResult> rule, IGrammarExpression<TResult> peg)
         {
             if (!ownRules.Contains(rule))
                 throw new InvalidOperationException("This rule does not belong to the current rules set!");

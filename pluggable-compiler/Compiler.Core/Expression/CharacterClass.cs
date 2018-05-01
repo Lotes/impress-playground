@@ -2,7 +2,7 @@
 
 namespace Compiler.Core.Expression
 {
-    public class CharacterClass: IGrammarExpression
+    public class CharacterClass : IGrammarExpression<string>
     {
         public CharacterClass(ICharSet charSet)
         {
@@ -10,9 +10,10 @@ namespace Compiler.Core.Expression
         }
 
         public ICharSet CharSet { get; }
-        public T Accept<T, S>(IVisitor<T, S> visitor, S state)
+
+        public MayBe<IParseResult<string>> ParseAt(IParserVisitor visitor, int position)
         {
-            return visitor.Visit_CharacterClass(state, this);
+            return visitor.Visit_CharacterClass(position, this);
         }
     }
 }

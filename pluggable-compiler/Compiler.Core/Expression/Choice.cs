@@ -2,18 +2,18 @@
 
 namespace Compiler.Core.Expression
 {
-    public class Choice: IGrammarExpression
+    public class Choice<TResult> : IGrammarExpression<TResult>
     {
-        public Choice(IEnumerable<IGrammarExpression> choices)
+        public Choice(IEnumerable<IGrammarExpression<TResult>> choices)
         {
             Choices = choices;
         }
 
-        public IEnumerable<IGrammarExpression> Choices { get; }
+        public IEnumerable<IGrammarExpression<TResult>> Choices { get; }
 
-        public T Accept<T, S>(IVisitor<T, S> visitor, S state)
+        public MayBe<IParseResult<TResult>> ParseAt(IParserVisitor visitor, int position)
         {
-            return visitor.Visit_Choice(state, this);
+            return visitor.Visit_Choice(position, this);
         }
     }
 }

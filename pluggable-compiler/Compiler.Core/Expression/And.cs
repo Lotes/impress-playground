@@ -1,16 +1,16 @@
 ﻿namespace Compiler.Core.Expression
 {
-    public class And : IGrammarExpression
+    public class And<TResult> : IGrammarExpression<TResult>
     {
-        public And(IGrammarExpression operand)
+        public And(IGrammarExpression<TResult> operand)
         {
             Operand = operand;
         }
 
-        public IGrammarExpression Operand { get; }
-        public T Accept<T, S>(IVisitor<T, S> visitor, S state)
+        public IGrammarExpression<TResult> Operand { get; }
+        public MayBe<IParseResult<TResult>> ParseAt(IParserVisitor visitor, int position)
         {
-            return visitor.Visit_And(state, this);
+            return visitor.Visit_And(position, this);
         }
     }
 }

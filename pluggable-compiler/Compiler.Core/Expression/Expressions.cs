@@ -7,70 +7,69 @@ using System.Threading.Tasks;
 
 namespace Compiler.Core.Expression
 {
-    public static class Expressions
+    public static partial class Expressions
     {
-        public static readonly IGrammarExpression Epsilon = new CharacterClass(new CharSet());
+        public static readonly IGrammarExpression<string> Epsilon = new CharacterClass(new CharSet());
 
-        public static readonly IGrammarExpression EOF = new EOF();
-
-        /*public static T ReferencedAs<T>(IGrammarExpression<T> expr, )
+        public static readonly IGrammarExpression<string> EOF = new EOF();
+        public static IGrammarExpression<string> Char(char c)
         {
-
-        }*/
-
-        public static IGrammarExpression Sequence(params IGrammarExpression[] elements)
-        {
-            return new Sequence(elements);
+            return new CharacterClass(new CharSet(c));
         }
 
-        public static IGrammarExpression Char(char c)
+        public static IGrammarExpression<string> Chars(params char[] cs)
         {
-            return new Sequence(new[] { new CharacterClass(new CharSet(c)) });
+            return new CharacterClass(new CharSet(cs));
         }
 
-        public static IGrammarExpression Choice(params IGrammarExpression[] choices)
+        public static IGrammarExpression<string> Range(char from, char to)
         {
-            return new Choice(choices);
+            return new CharacterClass(new CharSet(new CharRange(from, to)));
         }
 
-        public static IGrammarExpression CharacterClass(params char[] chars)
+        public static IGrammarBuilder New()
         {
-            return new CharacterClass(new CharSet(chars));
+            return new GrammarBuilder();
         }
 
-        public static IGrammarExpression CharacterClass(params CharRange[] ranges)
+        public static IGrammarExpression<TResult> Choice<TResult>(params IGrammarExpression<TResult>[] choices)
         {
-            return new CharacterClass(new CharSet(ranges));
+            return new Choice<TResult>(choices);
         }
 
-        public static IGrammarExpression Call(IRule rule)
+        public static IGrammarExpression<TResult> Call<TResult>(IRule<TResult> rule)
         {
-            return new Call(rule);
+            return new Call<TResult>(rule);
         }
 
-        public static IGrammarExpression Repeat(IGrammarExpression expression, int min, int? max = null)
+        public static IGrammarExpression<TResult> Returns<TSource, TResult>(this IGrammarExpression<TSource> expr, Func<TSource, TResult> convert)
         {
-            return new Repetition(expression, min, max);
+            return new Return<TSource, TResult>(expr, convert);
         }
 
-        public static IGrammarExpression ZeroOrMore(IGrammarExpression expression)
+        public static IGrammarExpression<IReadOnlyList<TResult>> Repeat<TResult>(IGrammarExpression<TResult> expression, int min, int? max = null)
         {
-            return new Repetition(expression, 0, null);
+            return new Repetition<TResult>(expression, min, max);
         }
 
-        public static IGrammarExpression OneOrMore(IGrammarExpression expression)
+        public static IGrammarExpression<IReadOnlyList<TResult>> ZeroOrMore<TResult>(IGrammarExpression<TResult> expression)
         {
-            return new Repetition(expression, 1, null);
+            return Repeat(expression, 0, null);
         }
 
-        public static IGrammarExpression Optional(IGrammarExpression expression)
+        public static IGrammarExpression<IReadOnlyList<TResult>> OneOrMore<TResult>(IGrammarExpression<TResult> expression)
         {
-            return new Repetition(expression, 0, 1);
+            return Repeat(expression, 1, null);
         }
 
-        public static IGrammarExpression Named(string name, IGrammarExpression expression)
+        public static IGrammarExpression<IReadOnlyList<TResult>> Optional<TResult>(IGrammarExpression<TResult> expression)
         {
-            return new Named(name, expression);
+            return Repeat(expression, 0, 1);
+        }
+
+        public static IGrammarExpression<TResult> As<TResult>(string name, IGrammarExpression<TResult> expression)
+        {
+            return new Named<TResult>(name, expression);
         }
     }
 }
