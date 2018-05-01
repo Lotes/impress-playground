@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Compiler.Core.Engine.Builder
+namespace Compiler.Core.Engine
 {
     public interface ICoercionOperation
     {
         Type SourceType { get; }
         Type TargetType { get; }
         CoercionType CoercionType { get; }
-        object Convert(object source);
+        Func<object, object> Convert { get; }
     }
 }

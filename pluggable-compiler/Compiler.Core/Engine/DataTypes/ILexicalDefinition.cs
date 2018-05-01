@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Compiler.Core.Engine.Builder
+namespace Compiler.Core.Engine
 {
     public interface ILexicalDefinition
     {

@@ -5,8 +5,8 @@ namespace Compiler.Core.Expression
 {
     public interface IGrammarBuilder
     {
-        IGrammarBuilder NewRule<T>(Expression.IGrammarExpression<T> peg, string hintName, out IRule rule);
-        IGrammarBuilder RedefineRule<T>(IRule<T> rule, Expression.IGrammarExpression<T> peg);
-        IGrammar<T> Build<T>(IRule<T> startAt);
+        IGrammarBuilder NewRule<TResult>(string hintName, Expression.IGrammarExpression<TResult> peg, out IRule<TResult> rule);
+        IGrammarBuilder RedefineRule<TResult>(IRule<TResult> rule, Expression.IGrammarExpression<TResult> peg);
+        IGrammar<TResult> Build<TResult>(IRule<TResult> startAt);
     }
 }

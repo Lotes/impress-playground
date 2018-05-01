@@ -12,6 +12,20 @@ namespace Compiler.Core.Expression
         public static readonly IGrammarExpression<string> Epsilon = new CharacterClass(new CharSet());
 
         public static readonly IGrammarExpression<string> EOF = new EOF();
+        public static IGrammarExpression<string> Char(char c)
+        {
+            return new CharacterClass(new CharSet(c));
+        }
+
+        public static IGrammarExpression<string> Chars(params char[] cs)
+        {
+            return new CharacterClass(new CharSet(cs));
+        }
+
+        public static IGrammarExpression<string> Range(char from, char to)
+        {
+            return new CharacterClass(new CharSet(new CharRange(from, to)));
+        }
 
         public static IGrammarBuilder New()
         {
@@ -36,6 +50,26 @@ namespace Compiler.Core.Expression
         public static IGrammarExpression<IReadOnlyList<TResult>> Repeat<TResult>(IGrammarExpression<TResult> expression, int min, int? max = null)
         {
             return new Repetition<TResult>(expression, min, max);
+        }
+
+        public static IGrammarExpression<IReadOnlyList<TResult>> ZeroOrMore<TResult>(IGrammarExpression<TResult> expression)
+        {
+            return Repeat(expression, 0, null);
+        }
+
+        public static IGrammarExpression<IReadOnlyList<TResult>> OneOrMore<TResult>(IGrammarExpression<TResult> expression)
+        {
+            return Repeat(expression, 1, null);
+        }
+
+        public static IGrammarExpression<IReadOnlyList<TResult>> Optional<TResult>(IGrammarExpression<TResult> expression)
+        {
+            return Repeat(expression, 0, 1);
+        }
+
+        public static IGrammarExpression<TResult> As<TResult>(string name, IGrammarExpression<TResult> expression)
+        {
+            return new Named<TResult>(name, expression);
         }
     }
 }

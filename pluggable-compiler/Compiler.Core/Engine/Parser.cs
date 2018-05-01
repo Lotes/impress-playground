@@ -4,7 +4,7 @@ namespace Compiler.Core.Engine
 {
     public class Parser : IParser
     {
-        public Parser(Builder.ToolKit kit)
+        public Parser()
         {
 
         }
