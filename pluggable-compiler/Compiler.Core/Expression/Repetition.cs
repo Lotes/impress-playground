@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Compiler.Core.Expression
 {
-    public class Repetition<TResult> : IGrammarExpression<TResult[]>
+    public class Repetition<TResult> : IGrammarExpression<IReadOnlyList<TResult>>
     {
         public Repetition(IGrammarExpression<TResult> expression, int minimum, int? maximum)
         {
@@ -18,9 +18,9 @@ namespace Compiler.Core.Expression
         public int Minimum { get; }
         public int? Maximum { get; }
 
-        public TResult[] Accept<S>(IVisitor<S> visitor, S state)
+        public MayBe<IParseResult<IReadOnlyList<TResult>>> ParseAt(IParserVisitor visitor, int position)
         {
-            return visitor.Visit_Repetition(state, this);
-        }       
+            return visitor.Visit_Repetition(position, this);
+        }
     }
 }

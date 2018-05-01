@@ -52,7 +52,6 @@
     <Compile Include="Engine\Builder\ICoercionOperation.cs" />
     <Compile Include="Engine\Builder\CustomOperator.cs" />
     <Compile Include="Expression\EOF.cs" />
-    <Compile Include="Expression\ExpressionParser.cs" />
     <Compile Include="Expression\Expressions.cs" />
     <Compile Include="Expression\GrammarBuilder.cs" />
     <Compile Include="Expression\IExpressionParser.cs" />
@@ -81,6 +80,7 @@
     <Compile Include="Expression\Choice.cs" />
     <Compile Include="Expression\IGrammar.cs" />
     <Compile Include="Expression\IParserContext.cs" />
+    <Compile Include="Expression\IParserVisitor.cs" />
     <Compile Include="Expression\Named.cs" />
     <Compile Include="Expression\ParserContext.cs" />
     <Compile Include="Expression\ParseResult.cs" />
@@ -92,12 +92,15 @@
     <Compile Include="Expression\Not.cs" />
     <Compile Include="Expression\ParseResultExtensions.cs" />
     <Compile Include="Expression\Grammars.cs" />
+    <Compile Include="Expression\ParserVisitor.cs" />
     <Compile Include="Expression\Repetition.cs" />
+    <Compile Include="Expression\Return.cs" />
     <Compile Include="Expression\Sequence.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Sequence.generated.tt</DependentUpon>
     </Compile>
+    <Compile Include="MayBe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

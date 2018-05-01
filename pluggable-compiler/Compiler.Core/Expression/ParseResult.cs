@@ -8,8 +8,9 @@ namespace Compiler.Core.Expression
 {
     public class ParseResult<TResult> : IParseResult<TResult>
     {
-        public ParseResult(IGrammarExpression<TResult> expression, IParserContext context, ICursor start, ICursor end, IEnumerable<IParseResult> children)
+        public ParseResult(TResult value, IGrammarExpression<TResult> expression, IParserContext context, ICursor start, ICursor end, IEnumerable<IParseResult> children)
         {
+            Result = value;
             Expression = expression;
             Context = context;
             Start = start;
@@ -28,5 +29,7 @@ namespace Compiler.Core.Expression
         public List<IParseResult> Children { get; }
 
         IReadOnlyList<IParseResult> IParseResult.Children => Children;
+
+        public TResult Result { get; }
     }
 }

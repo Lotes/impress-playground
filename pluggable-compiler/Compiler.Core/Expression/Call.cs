@@ -14,9 +14,9 @@ namespace Compiler.Core.Expression
         }
 
         public IRule<TResult> Rule { get; }
-        public TResult Accept<S>(IVisitor<S> visitor, S state)
+        public MayBe<IParseResult<TResult>> ParseAt(IParserVisitor visitor, int position)
         {
-            return visitor.Visit_Call(state, this);
+            return visitor.Visit_Call(position, this);
         }
     }
 }

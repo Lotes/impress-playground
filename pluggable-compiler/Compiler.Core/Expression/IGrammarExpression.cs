@@ -7,6 +7,6 @@ namespace Compiler.Core.Expression
 {
     public interface IGrammarExpression<TResult>
     {
-        TResult Accept<TState>(IVisitor<TState> visitor, TState state);
+        MayBe<IParseResult<TResult>> ParseAt(IParserVisitor visitor, int position);
     }
 }

@@ -9,14 +9,9 @@ namespace Compiler.Core.Expression
 {
     public static class Expressions
     {
-        public static readonly IGrammarExpression Epsilon = new CharacterClass(new CharSet());
+        public static readonly IGrammarExpression<string> Epsilon = new CharacterClass(new CharSet());
 
-        public static readonly IGrammarExpression EOF = new EOF();
-
-        public static IGrammarExpression Sequence(string str, bool ignoreCase = false)
-        {
-            return new Sequence(str, ignoreCase);
-        }
+        public static readonly IGrammarExpression<string> EOF = new EOF<string>();
 
         public static IGrammarExpression Sequence(params IGrammarExpression[] elements)
         {

@@ -12,7 +12,7 @@ using System.Linq;
 namespace Compiler.Core.Expression
 {
 <#
-int maxCount = 4;
+int maxCount = 8;
 string exprType = "IGrammarExpression"; 
 Func<int, string> otype = num => "TOperand"+num;  
 Func<int, IEnumerable<int>> range = num => Enumerable.Range(1, num); 
@@ -20,31 +20,80 @@ Func<int, string> otypeList = num => string.Join(", ", range(num).Select(n => "T
 Func<int, string> oformals = num => string.Join(", ", range(num).Select(n => exprType+"<TOperand"+n+"> operand"+n));
 
 #>
-	public interface IVisitor<TState>
+	public interface ISequenceParserVisitor
     {
-        TResult Visit_And<TResult, TOperand>(TState state, And<TResult, TOperand> and);
-        TResult Visit_Call<TResult>(TState state, Call<TResult> call);
-        TResult[] Visit_Repetition<TResult>(TState state, Repetition<TResult> repetition);
-        TResult Visit_Choice<TResult, TOperand>(TState state, Choice<TResult, TOperand> choice);
-        TResult Visit_CharacterClass<TResult>(TState state, CharacterClass<TResult> characterClass);
-        TResult Visit_Named<TResult, TOperand>(TState state, Named<TResult, TOperand> named);
-        TResult Visit_EOF<TResult>(TState state, EOF<TResult> eof);
-        TResult Visit_Not<TResult, TOperand>(TState state, Not<TResult, TOperand> not);
 <#
-for(int count=1; count<maxCount; count++)
+for(int count=1; count<=maxCount; count++)
 {
 #>
-        TResult Visit_Sequence<TResult, <#=otypeList(count)#>>(TState state, Sequence<TResult, <#=otypeList(count)#>> sequence);
+        MayBe<IParseResult<Tuple<<#=otypeList(count)#>>>> Visit_Sequence<<#=otypeList(count)#>>(int position, Sequence<<#=otypeList(count)#>> sequence);
+<#
+}
+#>
+    }
+
+	public partial class ParserVisitor 
+    {
+<#
+for(int count=1; count<=maxCount; count++)
+{
+#>
+        public MayBe<IParseResult<Tuple<<#=otypeList(count)#>>>> Visit_Sequence<<#=otypeList(count)#>>(int position, Sequence<<#=otypeList(count)#>> sequence)
+		{
+            var Nothing = MayBe<IParseResult<Tuple<<#=otypeList(count)#>>>>.Nothing;
+<#
+	for(int index=1; index<=count; index++)
+	{
+#>
+            //Operand <#=index#>
+            var result<#=index#> = sequence.Operand<#=index#>.ParseAt(this, position);
+            if (result<#=index#> == MayBe<IParseResult<TOperand<#=index#>>>.Nothing)
+                return Nothing;
+            position += result<#=index#>.Value.GetLength();
+
+<#
+	}
+#>	
+            return MayBe<IParseResult<Tuple<<#=otypeList(count)#>>>>.Some(
+                new ParseResult<Tuple<<#=otypeList(count)#>>>(
+                    new Tuple<<#=otypeList(count)#>>(
+<#
+	for(int index=1; index<=count; index++)
+	{
+#>
+                        result<#=index#>.Value.Result<#=index==count?"":","#>
+<#
+	}
+#>
+                    ),
+                    sequence,
+                    context,
+                    result<#=1#>.Value.Start,
+                    result<#=count#>.Value.End,
+                    new IParseResult[]
+                    {
+<#
+	for(int index=1; index<=count; index++)
+	{
+#>
+                        result<#=index#>.Value<#=index==count?"":","#>
+<#
+	}
+#>
+                    }
+                )
+            );		
+		}
 <#
 }
 #>
     }
 
 <#
-for(int count=1; count<maxCount; count++)
+for(int count=1; count<=maxCount; count++)
 {
 #>
-    public class Sequence<TResult, <#=otypeList(count)#>>: IGrammarExpression<TResult>
+    public class Sequence<<#=otypeList(count)#>>: IGrammarExpression<Tuple<<#=otypeList(count)#>>>
     {
         public Sequence(<#=oformals(count)#>)
         {
@@ -67,9 +116,9 @@ for(int count=1; count<maxCount; count++)
 	}
 #>
 
-        public TResult Accept<S>(IVisitor<S> visitor, S state)
+        public MayBe<IParseResult<Tuple<<#=otypeList(count)#>>>> ParseAt(IParserVisitor visitor, int position)
         {
-            return visitor.Visit_Sequence(state, this);
+            return visitor.Visit_Sequence(position, this);
         }
     }
 <#
