@@ -17,6 +17,7 @@ string exprType = "IGrammarExpression";
 Func<int, string> otype = num => "TOperand"+num;  
 Func<int, IEnumerable<int>> range = num => Enumerable.Range(1, num); 
 Func<int, string> otypeList = num => string.Join(", ", range(num).Select(n => "TOperand"+n));
+Func<int, string> ostringList = num => string.Join(", ", range(num).Select(n => "string"));
 Func<int, string> oformals = num => string.Join(", ", range(num).Select(n => exprType+"<TOperand"+n+"> operand"+n));
 Func<int, string> oactuals = num => string.Join(", ", range(num).Select(n => "operand"+n));
 
@@ -24,9 +25,14 @@ Func<int, string> oactuals = num => string.Join(", ", range(num).Select(n => "op
     public static partial class Expressions
     {
 <#
-for(int count=2; count<=maxCount; count++)
+for(int count=1; count<=maxCount; count++)
 {
 #>
+        public static IGrammarExpression<string> Concat(this IGrammarExpression<Tuple<<#=ostringList(count)#>>> @this)
+        {
+            return @this.Returns(string.Concat);
+        }
+
         public static IGrammarExpression<Tuple<<#=otypeList(count)#>>> Sequence<<#=otypeList(count)#>>(<#=oformals(count)#>)
         {
             return new Sequence<<#=otypeList(count)#>>(<#=oactuals(count)#>);

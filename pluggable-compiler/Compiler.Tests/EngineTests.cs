@@ -29,11 +29,11 @@ namespace Compiler.Tests
                     g
                         .NewRule("Digit", Range('0', '9'), out IRule<string> digit)
                         .NewRule("Number", 
-                            OneOrMore(Call(digit)).Returns(string.Concat)
+                            OneOrMore(Call(digit)).Concat()
                             .Then(
-                                Optional(Char('.').Then(OneOrMore(Call(digit))).Returns(string.Concat)).Returns(string.Concat)
+                                Optional(Char('.').Then(OneOrMore(Call(digit)).Concat()).Concat()).Concat()
                             )
-                            .Returns(string.Concat)
+                            .Concat()
                             .Returns(str => (IExpression)new LiteralExpression(typeof(double), double.Parse(str))), 
                             out IRule<IExpression> number
                         )
@@ -55,8 +55,9 @@ namespace Compiler.Tests
                 );
             builder
                 .AddWhiteSpaceDefinition(g => 
-                    g.NewRule("\\s", Chars('\n', '\r', '\t', ' '), out IRule<string> wsRule)
-                     .Build(wsRule)
+                    g
+                        .NewRule("\\s", Chars('\n', '\r', '\t', ' '), out IRule<string> wsRule)
+                        .Build(wsRule)
                 );
             builder.AddBinaryOperation<double, double, double>(opBinaryPlus, (a, b) => a + b);
             var parser = builder.Build();

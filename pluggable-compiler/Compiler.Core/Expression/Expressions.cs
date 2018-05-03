@@ -24,6 +24,11 @@ namespace Compiler.Core.Expression
             return result;
         }
 
+        public static IGrammarExpression<string> Concat(this IGrammarExpression<IReadOnlyList<string>> @this)
+        {
+            return @this.Returns(string.Concat);
+        }
+
         public static IGrammarExpression<TResult> Null<TResult>() { return (IGrammarExpression<TResult>)null; }
 
         public static readonly IGrammarExpression<string> EOF = new EOF();

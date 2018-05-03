@@ -7,6 +7,25 @@ namespace Compiler.Core.Expression
 {
     public static partial class Expressions
     {
+        public static IGrammarExpression<string> Concat(this IGrammarExpression<Tuple<string>> @this)
+        {
+            return @this.Returns(string.Concat);
+        }
+
+        public static IGrammarExpression<Tuple<TOperand1>> Sequence<TOperand1>(IGrammarExpression<TOperand1> operand1)
+        {
+            return new Sequence<TOperand1>(operand1);
+        }
+
+        public static IGrammarExpression<Tuple<TOperand1>> Then<TOperand1>(this IGrammarExpression<TOperand1> operand1)
+        {
+            return new Sequence<TOperand1>(operand1);
+        }
+        public static IGrammarExpression<string> Concat(this IGrammarExpression<Tuple<string, string>> @this)
+        {
+            return @this.Returns(string.Concat);
+        }
+
         public static IGrammarExpression<Tuple<TOperand1, TOperand2>> Sequence<TOperand1, TOperand2>(IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2)
         {
             return new Sequence<TOperand1, TOperand2>(operand1, operand2);
@@ -16,6 +35,11 @@ namespace Compiler.Core.Expression
         {
             return new Sequence<TOperand1, TOperand2>(operand1, operand2);
         }
+        public static IGrammarExpression<string> Concat(this IGrammarExpression<Tuple<string, string, string>> @this)
+        {
+            return @this.Returns(string.Concat);
+        }
+
         public static IGrammarExpression<Tuple<TOperand1, TOperand2, TOperand3>> Sequence<TOperand1, TOperand2, TOperand3>(IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2, IGrammarExpression<TOperand3> operand3)
         {
             return new Sequence<TOperand1, TOperand2, TOperand3>(operand1, operand2, operand3);
@@ -25,6 +49,11 @@ namespace Compiler.Core.Expression
         {
             return new Sequence<TOperand1, TOperand2, TOperand3>(operand1, operand2, operand3);
         }
+        public static IGrammarExpression<string> Concat(this IGrammarExpression<Tuple<string, string, string, string>> @this)
+        {
+            return @this.Returns(string.Concat);
+        }
+
         public static IGrammarExpression<Tuple<TOperand1, TOperand2, TOperand3, TOperand4>> Sequence<TOperand1, TOperand2, TOperand3, TOperand4>(IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2, IGrammarExpression<TOperand3> operand3, IGrammarExpression<TOperand4> operand4)
         {
             return new Sequence<TOperand1, TOperand2, TOperand3, TOperand4>(operand1, operand2, operand3, operand4);
@@ -34,6 +63,11 @@ namespace Compiler.Core.Expression
         {
             return new Sequence<TOperand1, TOperand2, TOperand3, TOperand4>(operand1, operand2, operand3, operand4);
         }
+        public static IGrammarExpression<string> Concat(this IGrammarExpression<Tuple<string, string, string, string, string>> @this)
+        {
+            return @this.Returns(string.Concat);
+        }
+
         public static IGrammarExpression<Tuple<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5>> Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5>(IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2, IGrammarExpression<TOperand3> operand3, IGrammarExpression<TOperand4> operand4, IGrammarExpression<TOperand5> operand5)
         {
             return new Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5>(operand1, operand2, operand3, operand4, operand5);
@@ -43,6 +77,11 @@ namespace Compiler.Core.Expression
         {
             return new Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5>(operand1, operand2, operand3, operand4, operand5);
         }
+        public static IGrammarExpression<string> Concat(this IGrammarExpression<Tuple<string, string, string, string, string, string>> @this)
+        {
+            return @this.Returns(string.Concat);
+        }
+
         public static IGrammarExpression<Tuple<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6>> Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6>(IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2, IGrammarExpression<TOperand3> operand3, IGrammarExpression<TOperand4> operand4, IGrammarExpression<TOperand5> operand5, IGrammarExpression<TOperand6> operand6)
         {
             return new Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6>(operand1, operand2, operand3, operand4, operand5, operand6);
@@ -52,6 +91,11 @@ namespace Compiler.Core.Expression
         {
             return new Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6>(operand1, operand2, operand3, operand4, operand5, operand6);
         }
+        public static IGrammarExpression<string> Concat(this IGrammarExpression<Tuple<string, string, string, string, string, string, string>> @this)
+        {
+            return @this.Returns(string.Concat);
+        }
+
         public static IGrammarExpression<Tuple<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6, TOperand7>> Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6, TOperand7>(IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2, IGrammarExpression<TOperand3> operand3, IGrammarExpression<TOperand4> operand4, IGrammarExpression<TOperand5> operand5, IGrammarExpression<TOperand6> operand6, IGrammarExpression<TOperand7> operand7)
         {
             return new Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6, TOperand7>(operand1, operand2, operand3, operand4, operand5, operand6, operand7);
@@ -61,6 +105,11 @@ namespace Compiler.Core.Expression
         {
             return new Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6, TOperand7>(operand1, operand2, operand3, operand4, operand5, operand6, operand7);
         }
+        public static IGrammarExpression<string> Concat(this IGrammarExpression<Tuple<string, string, string, string, string, string, string, string>> @this)
+        {
+            return @this.Returns(string.Concat);
+        }
+
         public static IGrammarExpression<Tuple<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6, TOperand7, TOperand8>> Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6, TOperand7, TOperand8>(IGrammarExpression<TOperand1> operand1, IGrammarExpression<TOperand2> operand2, IGrammarExpression<TOperand3> operand3, IGrammarExpression<TOperand4> operand4, IGrammarExpression<TOperand5> operand5, IGrammarExpression<TOperand6> operand6, IGrammarExpression<TOperand7> operand7, IGrammarExpression<TOperand8> operand8)
         {
             return new Sequence<TOperand1, TOperand2, TOperand3, TOperand4, TOperand5, TOperand6, TOperand7, TOperand8>(operand1, operand2, operand3, operand4, operand5, operand6, operand7, operand8);
