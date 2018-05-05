@@ -48,9 +48,11 @@
     <Compile Include="DictionaryExtensions.cs" />
     <Compile Include="Engine\DataTypes\CoercionOperation.cs" />
     <Compile Include="Engine\DataTypes\BinaryOperation.cs" />
+    <Compile Include="Engine\ParenthesesDefinition.cs" />
+    <Compile Include="Engine\ParserExpectation.cs" />
     <Compile Include="Engine\SyntaxTree\BinaryOperationExpression.cs" />
     <Compile Include="Engine\DataTypes\CoercionType.cs" />
-    <Compile Include="Engine\DataTypes\ExpressionDefinition.cs" />
+    <Compile Include="Engine\DataTypes\LiteralDefinition.cs" />
     <Compile Include="Engine\DataTypes\IBinaryOperation.cs" />
     <Compile Include="Engine\DataTypes\BinaryOperator.cs" />
     <Compile Include="Engine\DataTypes\ICoercionOperation.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="Expression\Expressions.cs" />
     <Compile Include="Expression\Grammar.cs" />
     <Compile Include="Expression\GrammarBuilder.cs" />
+    <Compile Include="Expression\Hook.cs" />
     <Compile Include="Expression\IExpressionParser.cs" />
     <Compile Include="Expression\IGrammarBuilder.cs" />
     <Compile Include="Engine\ParserBuilder.cs" />
@@ -79,7 +82,6 @@
     <Compile Include="Engine\DataTypes\IUnaryOperation.cs" />
     <Compile Include="Engine\DataTypes\UnaryOperator.cs" />
     <Compile Include="Engine\IValidationContext.cs" />
-    <Compile Include="Engine\IVariable.cs" />
     <Compile Include="Engine\Parser.cs" />
     <Compile Include="Engine\SyntaxTree\UnaryOperationExpression.cs" />
     <Compile Include="Expression\And.cs" />

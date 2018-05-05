@@ -10,6 +10,7 @@ namespace Compiler.Core.Expression
         MayBe<IParseResult<string>> Visit_EOF(int position, EOF eOF);
         MayBe<IParseResult<TResult>> Visit_Not<TResult>(int position, Not<TResult> not);
         MayBe<IParseResult<TResult>> Visit_And<TResult>(int position, And<TResult> and);
+        MayBe<IParseResult<TResult>> Visit_Hook<TResult>(int position, Hook<TResult> hook);
         MayBe<IParseResult<TResult>> Visit_Named<TResult>(int position, Named<TResult> named);
         MayBe<IParseResult<TResult>> Visit_Choice<TResult>(int position, Choice<TResult> choice);
         MayBe<IParseResult<IReadOnlyList<TResult>>> Visit_Repetition<TResult>(int position, Repetition<TResult> repetition);

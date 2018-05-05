@@ -70,6 +70,11 @@ namespace Compiler.Core.Expression
             return MayBe<IParseResult<string>>.Nothing;
         }
 
+        public MayBe<IParseResult<TResult>> Visit_Hook<TResult>(int position, Hook<TResult> hook)
+        {
+            return hook.Callback(context, position);
+        }
+
         public MayBe<IParseResult<TResult>> Visit_Named<TResult>(int position, Named<TResult> named)
         {
             var result = named.Expression.ParseAt(this, position);

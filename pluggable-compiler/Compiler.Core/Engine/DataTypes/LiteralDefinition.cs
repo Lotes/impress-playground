@@ -3,9 +3,9 @@ using System;
 
 namespace Compiler.Core.Engine
 {
-    public class ExpressionDefinition: ILexicalDefinition<IExpression>
+    public class LiteralDefinition: ILexicalDefinition<IExpression>
     {
-        public ExpressionDefinition(IGrammar<IExpression> grammar, int priority)
+        public LiteralDefinition(IGrammar<IExpression> grammar, int priority)
         {
             PartialGrammar = grammar;
             Priority = priority;

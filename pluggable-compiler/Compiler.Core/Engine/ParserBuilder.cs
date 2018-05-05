@@ -9,28 +9,30 @@ namespace Compiler.Core.Engine
 
     public partial class ParserBuilder : IParserBuilder
     {
-        //placeholder rules
-        private Rule<IExpression> expression = new Rule<IExpression>("Expression", Null<IExpression>());
-        private Rule<IStatement> statement = new Rule<IStatement>("Statement", Null<IStatement>());
-        private Rule<string> whiteSpaceZero = new Rule<string>("_", Null<string>());
-        private Rule<string> whiteSpaceOne = new Rule<string>("__", Null<string>());
-
         //parser part collections
         private ICollection<BinaryOperator> binaryOperators = new HashSet<BinaryOperator>();
         private ICollection<UnaryOperator> unaryOperators = new HashSet<UnaryOperator>();
         private ICollection<WhiteSpace> whiteSpaces = new HashSet<WhiteSpace>();
-        private ICollection<ExpressionDefinition> expressionDefinitions = new HashSet<ExpressionDefinition>();
+        private ICollection<LiteralDefinition> literalDefinitions = new HashSet<LiteralDefinition>();
         private ICollection<IBinaryOperation> binaryOperations = new HashSet<IBinaryOperation>();
         private ICollection<IUnaryOperation> unaryOperations = new HashSet<IUnaryOperation>();
         private ICollection<ICoercionOperation> coercionOperations = new HashSet<ICoercionOperation>();
         private ICollection<StatementDefinition> statementDefinitions = new HashSet<StatementDefinition>();
+        private ICollection<ParenthesesDefinition> parenthesesDefinitions = new HashSet<ParenthesesDefinition>();
+
+        //dynamic rules
+        private Rule<IExpression> expression;
+        private Rule<IStatement> statement;
+        private Rule<string> whiteSpace;
 
         public ParserBuilder()
         {
-            
+            expression = new Rule<IExpression>("Expression", Null<IExpression>());
+            statement = new Rule<IStatement>("Statement", Null<IStatement>());
+            whiteSpace = new Rule<string>("_", Null<string>());
         }
         
-        public BinaryOperator AddBinaryOperator(Func<PartialGrammarBuilder, IGrammar<string>> generateGrammar, Associativity associativity, int priority = 0)
+        public BinaryOperator AddBinaryOperator(PartialGrammarConstructor<string> generateGrammar, Associativity associativity, int priority = 0)
         {
             var partialBuilder = NewPartialGrammarBuilder();
             var op = new BinaryOperator(generateGrammar(partialBuilder), priority, associativity);
@@ -38,7 +40,7 @@ namespace Compiler.Core.Engine
             return op;
         }
 
-        public UnaryOperator AddUnaryOperator(Func<PartialGrammarBuilder, IGrammar<string>> generateGrammar, Associativity associativity, int priority = 0)
+        public UnaryOperator AddUnaryOperator(PartialGrammarConstructor<string> generateGrammar, Associativity associativity, int priority = 0)
         {
             var partialBuilder = NewPartialGrammarBuilder();
             var op = new UnaryOperator(generateGrammar(partialBuilder), priority, associativity);
@@ -46,7 +48,7 @@ namespace Compiler.Core.Engine
             return op;
         }
 
-        public void AddWhiteSpaceDefinition(Func<PartialGrammarBuilder, IGrammar<string>> generate, int priority = 0)
+        public void AddWhiteSpaceDefinition(PartialGrammarConstructor<string> generate, int priority = 0)
         {
             var partialBuilder = NewPartialGrammarBuilder();
             whiteSpaces.Add(new WhiteSpace(generate(partialBuilder), priority));
@@ -54,18 +56,18 @@ namespace Compiler.Core.Engine
 
         private PartialGrammarBuilder NewPartialGrammarBuilder()
         {
-            return new PartialGrammarBuilder(expression, statement, whiteSpaceZero, whiteSpaceOne);
+            return new PartialGrammarBuilder(expression, statement, whiteSpace);
         }
 
-        public void AddExpressionDefinition(Func<PartialGrammarBuilder, IGrammar<IExpression>> generate, int priority)
+        public void AddLiteralDefinition(PartialGrammarConstructor<IExpression> generate, int priority)
         {
             var builder = NewPartialGrammarBuilder();
             var grammar = generate(builder);
-            var result = new ExpressionDefinition(grammar, priority);
-            expressionDefinitions.Add(result);
+            var result = new LiteralDefinition(grammar, priority);
+            literalDefinitions.Add(result);
         }
 
-        public void AddStatementDefinition(Func<PartialGrammarBuilder, IGrammar<IStatement>> generate, int priority = 0)
+        public void AddStatementDefinition(PartialGrammarConstructor<IStatement> generate, int priority = 0)
         {
             var builder = NewPartialGrammarBuilder();
             var grammar = generate(builder);
@@ -91,6 +93,12 @@ namespace Compiler.Core.Engine
             coercionOperations.Add(operation);
         }
 
+        public void AddParenthesesDefinition(ParserExpectation before, PartialGrammarConstructor<string> open, PartialGrammarConstructor<string> next, PartialGrammarConstructor<string> close, ParserExpectation after, FoldExpressionsDelegate fold, int priority = 0)
+        {
+            var definition = new ParenthesesDefinition(before, open, next, close, after, fold, priority);
+            parenthesesDefinitions.Add(definition);
+        }
+
         public IParser Build()
         {
             var rules = new List<IRule>();
@@ -102,13 +110,8 @@ namespace Compiler.Core.Engine
                 rules.AddRange(ws.PartialGrammar.Rules);
                 wsStarts.Add(Call<string>(ws.PartialGrammar.StartingRule));
             }
-            whiteSpaceZero.Expression = ZeroOrMore(Choice(wsStarts.ToArray())).Returns(string.Concat);
-            whiteSpaceOne.Expression = OneOrMore(Choice(wsStarts.ToArray())).Returns(string.Concat);
-            rules.Add(whiteSpaceZero);
-            rules.Add(whiteSpaceOne);
-            
-            
-
+            whiteSpace.Expression = Choice(wsStarts.ToArray());
+            rules.Add(whiteSpace);
             return new Parser();
         }
     }

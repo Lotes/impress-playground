@@ -11,15 +11,13 @@ namespace Compiler.Core.Engine
          
         public readonly IRule<IExpression> Expression;
         public readonly IRule<IStatement> Statement;
-        public readonly IRule<string> WhiteSpaceZeroOrMore;
-        public readonly IRule<string> WhiteSpaceOneOrMore;
+        public readonly IRule<string> WhiteSpace;
 
-        public PartialGrammarBuilder(IRule<IExpression> expression, IRule<IStatement> statement, IRule<string> whiteSpaceZeroOrMore, IRule<string> whiteSpacesOneOrMore)
+        public PartialGrammarBuilder(IRule<IExpression> expression, IRule<IStatement> statement, IRule<string> whiteSpace)
         {
             this.Expression = expression;
             this.Statement = statement;
-            this.WhiteSpaceOneOrMore = whiteSpacesOneOrMore;
-            this.WhiteSpaceZeroOrMore = whiteSpaceZeroOrMore;
+            this.WhiteSpace = whiteSpace;
         }
 
         public IGrammar<TResult> Build<TResult>(IRule<TResult> startAt)

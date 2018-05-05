@@ -8,6 +8,7 @@ using Compiler.Core.Chars;
 
 namespace Compiler.Tests
 {
+    using System.Linq;
     using static Expressions;
 
     [TestClass]
@@ -21,11 +22,12 @@ namespace Compiler.Tests
                 .AddBinaryOperator(g => 
                     g.NewRule("+",
                         Char('+'), out IRule<string> plusOperator
-                    ).Build(plusOperator), Associativity.Left, 
+                    ).Build(plusOperator), 
+                    Associativity.Left, 
                     20
                 );
             builder
-                .AddExpressionDefinition(g =>
+                .AddLiteralDefinition(g =>
                     g
                         .NewRule("Digit", Range('0', '9'), out IRule<string> digit)
                         .NewRule("Number", 
@@ -41,16 +43,12 @@ namespace Compiler.Tests
                     20
                 );
             builder
-                .AddExpressionDefinition(g =>
-                    g.NewRule("Parentheses", 
-                        Sequence(
-                            Char('('), 
-                            Call(g.WhiteSpaceZeroOrMore), 
-                            Call(g.Expression), 
-                            Call(g.WhiteSpaceZeroOrMore), 
-                            Char(')')
-                        ).Returns(tuple => tuple.Item3), out IRule<IExpression> parenthesesRule)
-                     .Build(parenthesesRule),
+                .AddParenthesesDefinition(ParserExpectation.Operator,
+                    g => g.NewRule("open", Char('('), out IRule<string> open).Build(open),
+                    null,
+                    g => g.NewRule("close", Char(')'), out IRule<string> close).Build(close),
+                    ParserExpectation.Operator,
+                    (lhs, expressions, rhs) => expressions.First(),
                     10000
                 );
             builder
