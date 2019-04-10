@@ -1,0 +1,25 @@
+{
+  "name": "playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lotes/playground.git"
+  },
+  "author": "Markus Rudolph",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lotes/playground/issues"
+  },
+  "homepage": "https://github.com/Lotes/playground#readme",
+  "dependencies": {
+    "box2d.ts": "^1.0.2"
+  }
+}
