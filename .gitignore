@@ -1,7 +1,0 @@
-emails/node_modules
-/pluggable-compiler/Compiler.Core/bin
-/pluggable-compiler/Compiler.Core/obj
-/pluggable-compiler/.vs
-/pluggable-compiler/packages
-/pluggable-compiler/Compiler.Tests/bin
-/pluggable-compiler/Compiler.Tests/obj
