@@ -1,1 +1,1 @@
-watch dot -Tsvg -o task-tree.svg task-tree.dot
+watch call create.bat
