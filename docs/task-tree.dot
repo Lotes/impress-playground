@@ -1,0 +1,31 @@
+digraph Tasks {
+  node [shape=rectangle]
+  taskBallPhy [label="Ball physics", URL="ball-physics.html"]
+  taskBatPhy [label="Bat physics", URL="bat-physics.html"]
+  taskBatSkin [label="Bat skin", URL="ball-physics.html"]
+  taskBallSkin [label="Ball skin", URL="ball-skin.html"]
+  taskMapPhy [label="Map physics", URL="map-physics.html"]
+  taskMapSkin [label="Map skin", URL="map-skin.html"]
+  taskNetPhy [label="Net physics", URL="net-phy.html"]
+  taskNetSkin [label="Net skin", URL="net-skin.html"]
+  taskGame [label="Game", URL="game.html"]
+  taskAI [label="AI", URL="ai.html"]
+  taskMultiplayer [label="Multiplayer", URL="multiplayer.html"]
+  {rank = same; taskBatPhy; taskBallPhy; taskNetPhy; }
+  
+  taskNetPhy -> taskNetSkin
+  taskMapPhy -> taskBallPhy
+  taskMapPhy -> taskBatPhy
+  taskBallPhy -> taskBatPhy
+  taskBallPhy -> taskBallSkin
+  taskBatPhy -> taskBatSkin
+  taskMapPhy -> taskMapSkin
+  
+  taskNetSkin -> taskGame
+  taskBallSkin -> taskGame
+  taskBatSkin -> taskGame
+  taskMapSkin -> taskGame
+  
+  taskGame -> taskMultiplayer
+  taskMultiplayer -> taskAI
+}
