@@ -1,6 +1,6 @@
 digraph Tasks {
   node [shape=rectangle]
-  taskBallPhy [label="Ball physics", URL="ball-physics.html"]
+  taskBallPhy [label="Ball physics", URL="ball_physics/"]
   taskBatPhy [label="Bat physics", URL="bat-physics.html"]
   taskBatSkin [label="Bat skin", URL="ball-physics.html"]
   taskBallSkin [label="Ball skin", URL="ball-skin.html"]

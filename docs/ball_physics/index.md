@@ -7,7 +7,7 @@ ball is soft and the bat too. But how this can be done?
 
 ## Possible solution
 
-My first idea was too write my own physics engine. Instead of using ridig
+My first idea was too write my own physics engine. Instead of using rigid
 body engines, that can be found out there in the big net, I could do my own
 collision detection while stepping through the simulation.
 
